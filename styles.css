@@ -1,6 +1,249 @@
+*{
+    box-sizing: border-box;
+    font-size: 62.5%;
+    color:#fff;
+}
+
+html{
+    position: relative;
+    height: 100vh;
+}
+
+:root{
+    --color-uno: #17183d;
+    --color-dos: #1c1e43;
+    --color-tres: #1e2046;
+    --color-cuatro: #22254b;
+    --color-cinco: #373b69;
+    --color-seis: #3f446c;
+    --color-siete: #3f4160;
+    
+}
 
 body{
-    height: 100vh;
-    width: 100vw;
-    background-color: grey;
+    margin: 0;
+    display: grid;
+    grid-template-areas: "header" "main" "footer";
+    height: 100%;
+    background-color: var(--color-cuatro);
+    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Varela Round', sans-serif; */
+    
 }
+
+
+header{
+    background-color: var(--color-cuatro);
+    grid-area: header;
+    padding: 1rem;
+    align-content: center;
+}
+
+header ul{
+    display: flex;
+    margin: 0;
+}
+
+ul span,i{
+    font-size: 2rem;
+
+}
+a{
+    text-decoration: none;
+}
+
+
+li{
+    list-style: none;
+    margin: 0.5rem;
+}
+
+.search{
+    border: 2px solid var(--color-siete);
+    background-color: transparent;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.search:focus{
+    outline:0;
+    background-color: var(--color-siete);
+}
+
+.search::placeholder{
+    color: #7b82c7a0;
+}
+
+footer{
+    grid-area: footer;
+}
+
+main{
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+
+}
+
+section{
+    height: 100%;
+    position: relative;
+    display: flex;
+    background-color: var(--color-siete);
+    max-width: 120rem;
+        margin: auto;
+}
+aside{
+    width: 3rem;
+    display: flex   ;
+    overflow: scroll;
+}
+.movies::-webkit-scrollbar,
+.mi-lista-content::-webkit-scrollbar,
+aside::-webkit-scrollbar {
+    display: none;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.movies{
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: scroll;
+}
+
+
+.movie-card,.favorite-movie-card{
+    width: 18rem;
+    height: 30rem;
+    margin: 4rem;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--color-cuatro);
+    border-radius: 5px;
+}
+
+.info-card{
+    font-size: 1.1rem;
+    text-align: center;
+}
+.info-card .card-title{
+    font-size: 1.3rem;
+}
+
+
+.img-card{
+    grid-area: img-card;
+    overflow: hidden;
+    height: 80%;
+    display: flex;
+    align-items: center;
+
+}
+
+
+.img-card>img{
+    width: 100%;
+    object-fit:fill;
+}
+
+.card-actions{
+    grid-area: action-card;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    max-height: 100%;
+    transform: translateY(101%);
+    transition: transform 0.5s ease-in;
+    font-size: 3rem;
+}
+
+.movie-card:hover .card-actions,.favorite-movie-card:hover .card-actions{
+    transform: translateY(0);
+    height: 100%;
+}
+
+.botonera button{
+    transition: transform 0.5s ease-in;
+    background-color: #1e2046;
+    align-self: center;
+    border-radius: 5px 0px 0px 5px;
+    padding: 1rem;
+    width: 100%;
+}
+.botonera{
+
+    align-self: center;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+
+}
+.mi-lista{
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    max-height: 100%;
+    transform: translateX(87%);
+    transition: transform 0.5s ease-in;
+    font-size: 3rem;
+    display: flex;
+    width: 33rem;
+}
+
+.mi-lista-content{
+    background-color: #1e2046;
+    overflow: scroll;
+    width: 100%;
+    border-left: solid 2px black;
+    /* box-shadow: -4px 0px 6px white; */
+    z-index: 1;
+}
+
+@media (min-width:575px) and (max-width:992px) {
+    .movie-card,.favorite-movie-card{
+        width: 15.6rem;
+        height: 26rem;
+        margin: 2rem;
+    }
+
+    nav{
+        display: flex;
+        justify-content: space-between;
+        max-width: 70rem;
+        margin: auto;
+    }
+
+}
+
+@media (min-width:992px) and (max-width:1200px) {
+    .movie-card,.favorite-movie-card{
+        width: 16.8rem;
+        height: 28rem;
+        margin: 3rem;
+    }
+    section{
+        margin: auto;
+    }
+    nav{
+        display: flex;
+        justify-content: space-between;
+        max-width: 85rem;
+        margin: auto;
+    }
+
+}
+
