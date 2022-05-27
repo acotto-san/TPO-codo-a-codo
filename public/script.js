@@ -108,7 +108,7 @@ function crearNuevaTarjeta(obj) {
 }
 
 function agregarAMiListaContent(btn) {
-    miListaContent.appendChild(clonarTarjetaPadreDelBotton(btn))
+    miLista.content.setChild(clonarTarjetaPadreDelBotton(btn))
 }
 
 function clonarTarjetaPadreDelBotton(btn) {
@@ -123,7 +123,7 @@ function clonarTarjetaPadreDelBotton(btn) {
 
 function conseguirLaTarjetaPadre(btn) {
     const movieId = btn.getAttribute('movieid')
-    const movieCard = document.getElementById
+    const movieCard = document.getElementById('movieId')
     console.log(movieCard)
 
 }
@@ -161,6 +161,7 @@ class MiLista {
         this.subirListaBoton = new SubirListaBoton()
         this.bajarListaBoton = new BajarListaBoton()
         this.miListaBoton = new MiListaBoton()
+        this.content = new MiListaContent()
     }
 
     mostrar() {
@@ -176,6 +177,16 @@ class MiLista {
         this.aLaVista = !this.aLaVista;
     }
 
+}
+
+class MiListaContent{
+    constructor(){
+        this.div = document.querySelector('.mi-lista-content')
+    }
+
+    setChild(obj){
+        this.div.appendChild(obj)
+    }
 }
 
 class SubirListaBoton{
