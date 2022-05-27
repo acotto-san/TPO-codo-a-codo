@@ -116,8 +116,14 @@ function clonarTarjetaPadreDelBotton(btn) {
     const movieId = btn.getAttribute('movieid')
     const tarjetaACopiar = document.querySelector(`.movie-card.${movieId}`)
     tarjetaNueva.classList.add('favorite-movie-card')
-    tarjetaNueva.classList.add(movieId)
+    tarjetaNueva.setAttribute('favorite-id',movieId)
     tarjetaNueva.innerHTML = tarjetaACopiar.innerHTML
+    
+    tarjetaNueva.querySelector('.add-to-my-list').remove()
+    tarjetaNueva.querySelector('.card-actions').innerHTML += `
+                        <a class="remove-from-my-list" movieid="${movieId}" onclick=removeMeFromFavList(this)><i class="fa-solid fa-heart-circle-minus fa-sm"></i></a>`
+    
+                        console.log(tarjetaNueva)
     return tarjetaNueva
 }
 
@@ -133,6 +139,10 @@ function searchMovies() {
     // .then(response => response.json())
     // .then(data => data.results.forEach(element => crearNuevaTarjeta(element)));
     pelis.results.forEach(element => crearNuevaTarjeta(element))
+}
+
+function removeMeFromFavList(element){
+    document.querySelector(`[favorite-id="${element.getAttribute('movieId')}"]`).remove()
 }
 
 
