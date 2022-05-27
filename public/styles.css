@@ -163,11 +163,27 @@ nav{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0.608);
     max-height: 100%;
     transform: translateY(101%);
     transition: transform 0.5s ease-in;
-    font-size: 3rem;
+    font-size: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-actions>i{
+    
+}
+
+.card-actions i:hover{
+    color: #1e2046;
+}
+
+.card-actions i:active{
+    color: #fff;
 }
 
 .movie-card:hover .card-actions,.favorite-movie-card:hover .card-actions{
@@ -183,13 +199,34 @@ nav{
     padding: 1rem;
     width: 100%;
 }
-.botonera{
+.bajar-lista{
+    position: absolute;
+    z-index:1;
+    top:0;
+    left: 0%;
+    right: 0%;
+    transform: translateY(0%);
+}
 
+.mi-lista-button{
+    z-index: 2;
+}
+.subir-lista{
+    position: absolute;
+    z-index:1;
+    top:0;
+    left: 0%;
+    right: 0%;
+    transform: translateY(0%);
+}
+
+.botonera{
+    position: relative;
     align-self: center;
     z-index: 2;
     display: flex;
     flex-direction: column;
-
+    
 }
 .mi-lista{
     position: absolute;

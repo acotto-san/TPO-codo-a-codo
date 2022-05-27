@@ -1,14 +1,12 @@
 let movies;
 
 let apikey = 'k_t8q4da69'
-let apikeys = ['k_bzkveqwr','k_t8q4da69']
+let apikeys = ['k_bzkveqwr', 'k_t8q4da69']
 
-const miLista = document.querySelector('.mi-lista')
-const miListaContent = document.querySelector('.mi-lista-content')
-const miListaButton = document.querySelector('.mi-lista-button')
-miListaButton.addEventListener('click',manipularLista)
-console.log(miLista)
-let listaAbierta = false;
+const moviesDiv = document.querySelector('.movies')
+
+
+
 
 let pelis = {
     "searchType": "Title",
@@ -88,8 +86,7 @@ let pelis = {
     "errorMessage": ""
 }
 
-function crearNuevaTarjeta(obj){
-    const moviesDiv = document.querySelector('.movies')
+function crearNuevaTarjeta(obj) {
     const nuevaTarjeta = document.createElement('div')
     nuevaTarjeta.classList.add(`movie-card`)
     nuevaTarjeta.classList.add(obj.id)
@@ -103,69 +100,112 @@ function crearNuevaTarjeta(obj){
                         <span class="card-title">${obj.title}</span><br><br>${obj.description}
                     </div>
                     <div class="card-actions">
-                            <button class="mas-info-card">Mas info</button>
-                            <button class="add-to-my-list" movieid="${obj.id}" onclick=agregarAMiListaContent(this)>Agregar</button>
+                            <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="add-to-my-list" movieid="${obj.id}" onclick=agregarAMiListaContent(this)><i class="fa-solid fa-heart-circle-plus fa-sm"></i></a>
                     </div>
                     
 `
 }
 
-function agregarAMiListaContent(btn){
+function agregarAMiListaContent(btn) {
     miListaContent.appendChild(clonarTarjetaPadreDelBotton(btn))
 }
 
-function clonarTarjetaPadreDelBotton(btn){
+function clonarTarjetaPadreDelBotton(btn) {
     const tarjetaNueva = document.createElement("div")
     const movieId = btn.getAttribute('movieid')
     const tarjetaACopiar = document.querySelector(`.movie-card.${movieId}`)
     tarjetaNueva.classList.add('favorite-movie-card')
     tarjetaNueva.classList.add(movieId)
-    tarjetaNueva.innerHTML= tarjetaACopiar.innerHTML
+    tarjetaNueva.innerHTML = tarjetaACopiar.innerHTML
     return tarjetaNueva
 }
 
-function conseguirLaTarjetaPadre(btn){
+function conseguirLaTarjetaPadre(btn) {
     const movieId = btn.getAttribute('movieid')
     const movieCard = document.getElementById
     console.log(movieCard)
-    
+
 }
 
-function searchMovies(){
+function searchMovies() {
     // fetch(`https://imdb-api.com/es/API/search/${apikey}/jurassic park `)
     // .then(response => response.json())
     // .then(data => data.results.forEach(element => crearNuevaTarjeta(element)));
     pelis.results.forEach(element => crearNuevaTarjeta(element))
-    
-
-}
-
-function someFunction(){
-    console.log("parapa")
-}
-
-function mostrarMiLista(){
-
-    const miLista = document.querySelector('.mi-lista')
-    miLista.style.transform='translateX(3%)'
-    listaAbierta = !listaAbierta
-}
-function ocultarMiLista(){
-
-    const miLista = document.querySelector('.mi-lista')
-    miLista.style.transform='translateX(87%)'
-    listaAbierta = !listaAbierta
 }
 
 
-function manipularLista(){
-    if(listaAbierta){
-        ocultarMiLista()
-    }else{
-        mostrarMiLista()
+
+// ------------ comportamiento de mi lista -----------
+
+class BajarListaBoton {
+    constructor() {
+        this.boton = document.querySelector('.bajar-lista')
+    }
+
+    mostrar() {
+        this.boton.style.transform = 'translateY(100%)'
+    }
+
+    ocultar() {
+        this.boton.style.transform = 'translateY(0%)'
+    }
+}
+
+
+class MiLista {
+    constructor() {
+        this.div = document.querySelector('.mi-lista');
+        this.aLaVista = false;
+        this.subirListaBoton = new SubirListaBoton()
+        this.bajarListaBoton = new BajarListaBoton()
+        this.miListaBoton = new MiListaBoton()
+    }
+
+    mostrar() {
+        this.div.style.transform = 'translateX(3%)';
+        this.bajarListaBoton.mostrar();
+        this.subirListaBoton.mostrar();
+        this.aLaVista = !this.aLaVista;
+    }
+    ocultar() {
+        this.div.style.transform = 'translateX(87%)';
+        this.bajarListaBoton.ocultar();
+        this.subirListaBoton.ocultar();
+        this.aLaVista = !this.aLaVista;
     }
 
 }
+
+class SubirListaBoton{
+    constructor(){
+        this.boton = document.querySelector('.subir-lista')
+    }
+    mostrar(){
+        this.boton.style.transform = 'translateY(200%)'
+    }
+    ocultar(){
+        this.boton.style.transform = 'translateY(0%)'
+    }
+}
+
+class MiListaBoton{
+    constructor(){
+        this.boton = document.querySelector('.mi-lista-button')
+        this.boton.addEventListener('click',()=>{
+            if (miLista.aLaVista) {
+                miLista.ocultar()
+            } else {
+                miLista.mostrar()
+            }
+        })
+    } 
+
+}
+let miLista = new MiLista()
+
+// ---------- Fin de seccion ---------------
 
 
 searchMovies()

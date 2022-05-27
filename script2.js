@@ -6,7 +6,6 @@ window.onload = function() {
 };
 let movies
 
-let apikey = 'k_bzkveqwr'
 
 
 function searchMovies(){
