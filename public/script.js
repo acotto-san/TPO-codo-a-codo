@@ -1,12 +1,14 @@
-let movies;
-
-let apikey = 'k_t8q4da69'
-let apikeys = ['k_bzkveqwr', 'k_t8q4da69']
-
-const moviesDiv = document.querySelector('.movies')
 
 
 
+// -----------------header------------------
+class Header{
+    constructor(){
+        this.contacto = document.querySelector('.nav-contacto')
+    }
+}
+
+// --------------------------------------------
 
 let pelis = {
     "searchType": "Title",
@@ -97,7 +99,7 @@ function crearNuevaTarjeta(obj) {
                         <img src="${obj.image}" alt="imagen de la pelicula">
                     </div>
                     <div class="info-card">
-                        <span class="card-title">${obj.title}</span><br><br>${obj.description}
+                        <span class="card-title">${obj.title}</span><br><br><small>${obj.description}</small>
                     </div>
                     <div class="card-actions">
                             <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
@@ -134,11 +136,11 @@ function conseguirLaTarjetaPadre(btn) {
 
 }
 
-function searchMovies() {
-    // fetch(`https://imdb-api.com/es/API/search/${apikey}/jurassic park `)
-    // .then(response => response.json())
-    // .then(data => data.results.forEach(element => crearNuevaTarjeta(element)));
-    pelis.results.forEach(element => crearNuevaTarjeta(element))
+function searchMovies(input) {
+    fetch(`https://imdb-api.com/es/API/search/${apikey}/${input}`)
+    .then(response => response.json())
+    .then(data => data.results.forEach(element => crearNuevaTarjeta(element)));
+    // pelis.results.forEach(element => crearNuevaTarjeta(element))
 }
 
 function removeMeFromFavList(element){
@@ -155,7 +157,7 @@ class BajarListaBoton {
     }
 
     mostrar() {
-        this.boton.style.transform = 'translateY(100%)'
+        this.boton.style.transform = 'translateY(200%)'
     }
 
     ocultar() {
@@ -204,7 +206,7 @@ class SubirListaBoton{
         this.boton = document.querySelector('.subir-lista')
     }
     mostrar(){
-        this.boton.style.transform = 'translateY(200%)'
+        this.boton.style.transform = 'translateY(100%)'
     }
     ocultar(){
         this.boton.style.transform = 'translateY(0%)'
@@ -228,5 +230,24 @@ let miLista = new MiLista()
 
 // ---------- Fin de seccion ---------------
 
+let movies;
 
-searchMovies()
+let apikey = 'k_t8q4da69'
+let apikeys = ['k_bzkveqwr', 'k_t8q4da69']
+
+const moviesDiv = document.querySelector('.movies')
+// searchMovies()
+
+const firstSearchForm = document.getElementById('first-search-form');
+
+firstSearchForm.addEventListener('submit',function (event){
+    event.preventDefault();
+
+    const searchInput = firstSearchForm.elements['first-search-input'].value
+    if (searchInput.trim() === ""){
+        console.log("Error con el input de la busqueda")
+    }else{
+        searchMovies(searchInput);
+        firstSearchForm.parentNode.remove()
+    }
+})

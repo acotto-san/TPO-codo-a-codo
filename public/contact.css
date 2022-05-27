@@ -1,0 +1,25 @@
+@media (max-width:575px){
+    html{
+        height: 100vh;
+        width: -webkit-fill-available;
+        background-color: black;
+    }
+    body{
+        height: auto;
+        width: -webkit-fill-available;
+    }
+    header{
+        height: auto;
+        width: -webkit-fill-available;
+    }
+    main,section,article{
+        height: auto;
+        width: -webkit-fill-available;
+        background-color: beige;
+    }
+    form{
+        height: auto;
+        background-color: white;
+    }
+    
+}

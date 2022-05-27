@@ -16,29 +16,37 @@
     <header>
         <nav>
             <ul>
-                
                 <li>
-                    <a href=""> <i class="fa-solid fa-layer-group"></i> <span>Mi Lista</span></a>
+                    <a href="" class="nav-home"> <i class="fa-solid fa-house"></i><span>Home</span></a>
+                </li>                
+                <li>
+                    <a href="" class="nav-mi-lista"> <i class="fa-solid fa-layer-group"></i> <span>Mi Lista</span></a>
                 </li>
                 <li>
-                    <a href=""> <i class="fa-solid fa-podcast"></i><span>Coming Soon</span></a>
+                    <a href="" class="nav-comming-soon"> <i class="fa-solid fa-podcast"></i><span>Coming Soon</span></a>
                 </li>
                 <li>
-                    <a href=""> <i class="fa-solid fa-shuffle"></i><span>Random</span></a>
+                    <a href="" class="nav-random"> <i class="fa-solid fa-shuffle"></i><span>Random</span></a>
                 </li>
                 <li>
-                    <a href=""><i class="fa-solid fa-square-envelope"></i><span>Contacto</span></a>
+                    <a href="./contacto.html" class="nav-contacto"><i class="fa-solid fa-square-envelope"></i><span>Contacto</span></a>
                 </li>
             </ul>
     
-            <form id="form">
-                <input type="text" placeholder="Search" class="search">
+            <form id="search-form">
+                <input type="text" placeholder="Search" class="nav-search-input">
             </form>
         </nav>
     </header>
     <main>
         <section>
-            <article class="movies"></article>
+            <article class="movies">
+                <div class="form-container" style="width: 120rem;height: 50rem; display: grid; justify-content: center;align-items: center;">
+                    <form action="" id="first-search-form">
+                        <input type="text" placeholder="Search" id="first-search-input"  class="first-search-input" style="font-size: 4rem; color: black;" >
+                    </form>
+                </div>
+            </article>
             
         </section>
         
