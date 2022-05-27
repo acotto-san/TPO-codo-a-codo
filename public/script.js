@@ -1,4 +1,42 @@
 
+class NavBar{
+    constructor(){
+        this.inicializarNav();
+        this.insertarBotones();
+        this.agregarEvent();
+    }
+
+    inicializarNav(){
+        this.element = document.getElementById('nav-ul')
+    }
+
+    insertarBotones(){
+        this.element.innerHTML = ` <li>
+                                <a href="" id="home" class="nav-a"> <i class="fa-solid fa-house"></i><span>Home</span></a>
+                            </li>                
+                            <li>
+                                <a href="" id="mi-lista" class="nav-a"> <i class="fa-solid fa-layer-group"></i> <span>Mi Lista</span></a>
+                            </li>
+                            <li>
+                                <a href="" id="comming-soon" class="nav-a"> <i class="fa-solid fa-podcast"></i><span>Coming Soon</span></a>
+                            </li>
+                            <li>
+                                <a href="" id="random" class="nav-a"> <i class="fa-solid fa-shuffle" onclick=nav.saludar()></i><span>Random</span></a>
+                            </li>
+                            <li>
+                                <a href="" id="contacto" class="nav-a"><i class="fa-solid fa-square-envelope"></i><span>Contacto</span></a>
+                            </li>`
+    }
+
+    agregarEvent(){
+        const aTagCollection = document.getElementsByClassName('nav-a')
+        for(let i=0 ; i< aTagCollection.length ; i++){
+            let a = aTagCollection[i];
+            a.addEventListener('mouseover',miLista.guardarEnStorage)
+        }
+    }
+
+}
 
 
 // -----------------header------------------
@@ -110,7 +148,8 @@ function crearNuevaTarjeta(obj) {
 }
 
 function agregarAMiListaContent(btn) {
-    miLista.content.setChild(clonarTarjetaPadreDelBotton(btn))
+    miLista.content.setChild(clonarTarjetaPadreDelBotton(btn));
+    miLista.guardarEnStorage();
 }
 
 function clonarTarjetaPadreDelBotton(btn) {
@@ -124,8 +163,6 @@ function clonarTarjetaPadreDelBotton(btn) {
     tarjetaNueva.querySelector('.add-to-my-list').remove()
     tarjetaNueva.querySelector('.card-actions').innerHTML += `
                         <a class="remove-from-my-list" movieid="${movieId}" onclick=removeMeFromFavList(this)><i class="fa-solid fa-heart-circle-minus fa-sm"></i></a>`
-    
-                        console.log(tarjetaNueva)
     return tarjetaNueva
 }
 
@@ -145,6 +182,7 @@ function searchMovies(input) {
 
 function removeMeFromFavList(element){
     document.querySelector(`[favorite-id="${element.getAttribute('movieId')}"]`).remove()
+    miLista.guardarEnStorage()
 }
 
 
@@ -168,37 +206,80 @@ class BajarListaBoton {
 
 class MiLista {
     constructor() {
-        this.div = document.querySelector('.mi-lista');
+        this.obj = document.querySelector('.mi-lista');
         this.aLaVista = false;
         this.subirListaBoton = new SubirListaBoton()
         this.bajarListaBoton = new BajarListaBoton()
         this.miListaBoton = new MiListaBoton()
         this.content = new MiListaContent()
+        this.setChild(this.content.getObj())
+
+    }
+    getObj(){
+        return this.obj
     }
 
     mostrar() {
-        this.div.style.transform = 'translateX(3%)';
+        this.obj.style.transform = 'translateX(3%)';
         this.bajarListaBoton.mostrar();
         this.subirListaBoton.mostrar();
         this.aLaVista = !this.aLaVista;
     }
     ocultar() {
-        this.div.style.transform = 'translateX(87%)';
+        this.obj.style.transform = 'translateX(87%)';
         this.bajarListaBoton.ocultar();
         this.subirListaBoton.ocultar();
         this.aLaVista = !this.aLaVista;
     }
 
+    getContent(){
+        return this.content
+    }
+
+    setChild(element){
+        this.obj.appendChild(element)
+    }
+
+    
+    guardarEnStorage(){
+        let miListaContent = document.querySelector('.mi-lista-content')
+        localStorage.setItem('miListaContentInnerHtml',miListaContent.innerHTML)
+    }
+
+
 }
 
 class MiListaContent{
-    constructor(){
-        this.div = document.querySelector('.mi-lista-content')
+    constructor(element = null){
+        if (localStorage.getItem('miListaContentInnerHtml') && localStorage.getItem('miListaContentInnerHtml')!=="undefined"){
+            this.obj = document.createElement('div')
+            this.obj.className = 'mi-lista-content'
+            this.obj.innerHTML = localStorage.getItem('miListaContentInnerHtml')
+            console.log('lista encontrada')
+            console.log(this.obj)
+        }else{
+            this.obj = document.createElement('div')
+            this.obj.className = 'mi-lista-content'
+            console.log('nueva lista')
+            this.obj.innerHTML = ""
+            console.log(this.obj.innerHTML)
+        }
+        
     }
 
-    setChild(obj){
-        this.div.appendChild(obj)
+    setObj(element){
+        this.obj = element
     }
+
+    getObj(){
+        return this.obj
+    }
+
+    setChild(element){
+        this.obj.appendChild(element)
+    }
+
+
 }
 
 class SubirListaBoton{
@@ -226,7 +307,7 @@ class MiListaBoton{
     } 
 
 }
-let miLista = new MiLista()
+
 
 // ---------- Fin de seccion ---------------
 
@@ -236,7 +317,6 @@ let apikey = 'k_t8q4da69'
 let apikeys = ['k_bzkveqwr', 'k_t8q4da69']
 
 const moviesDiv = document.querySelector('.movies')
-// searchMovies()
 
 const firstSearchForm = document.getElementById('first-search-form');
 
@@ -251,3 +331,12 @@ firstSearchForm.addEventListener('submit',function (event){
         firstSearchForm.parentNode.remove()
     }
 })
+
+function sal(){
+    console.log(miLista.content.getObj())
+}
+
+let miLista = new MiLista()
+const nav =  new NavBar()
+
+
