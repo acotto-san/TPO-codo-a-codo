@@ -214,6 +214,7 @@ aside::-webkit-scrollbar {
     font-size: 3rem;
     display: flex;
     
+    
 }
 
 .botonera button{
@@ -259,6 +260,8 @@ aside::-webkit-scrollbar {
     border-left: solid 2px var(--color-tres);
     /* box-shadow: -4px 0px 6px white; */
     z-index: 1;
+    background-color: #8e8e8f;
+    width: 100%;
 }
 
 
@@ -293,6 +296,10 @@ aside::-webkit-scrollbar {
         width: 90%;
         display: flex;
         justify-content: center;
+    }
+
+    .mi-lista{
+    width: 25%;        
     }
     
     
