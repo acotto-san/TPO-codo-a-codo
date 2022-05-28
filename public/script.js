@@ -1,43 +1,4 @@
 
-class NavBar{
-    constructor(){
-        this.inicializarNav();
-        this.insertarBotones();
-        this.agregarEvent();
-    }
-
-    inicializarNav(){
-        this.element = document.getElementById('nav-ul')
-    }
-
-    insertarBotones(){
-        this.element.innerHTML = ` <li>
-                                <a href="" id="home" class="nav-a"> <i class="fa-solid fa-house"></i><span>Home</span></a>
-                            </li>                
-                            <li>
-                                <a href="" id="mi-lista" class="nav-a"> <i class="fa-solid fa-layer-group"></i> <span>Mi Lista</span></a>
-                            </li>
-                            <li>
-                                <a href="" id="comming-soon" class="nav-a"> <i class="fa-solid fa-podcast"></i><span>Coming Soon</span></a>
-                            </li>
-                            <li>
-                                <a href="" id="random" class="nav-a"> <i class="fa-solid fa-shuffle" onclick=nav.saludar()></i><span>Random</span></a>
-                            </li>
-                            <li>
-                                <a href="" id="contacto" class="nav-a"><i class="fa-solid fa-square-envelope"></i><span>Contacto</span></a>
-                            </li>`
-    }
-
-    agregarEvent(){
-        const aTagCollection = document.getElementsByClassName('nav-a')
-        for(let i=0 ; i< aTagCollection.length ; i++){
-            let a = aTagCollection[i];
-            a.addEventListener('mouseover',miLista.guardarEnStorage)
-        }
-    }
-
-}
-
 
 // -----------------header------------------
 class Header{
@@ -137,7 +98,7 @@ function crearNuevaTarjeta(obj) {
                         <img src="${obj.image}" alt="imagen de la pelicula">
                     </div>
                     <div class="info-card">
-                        <span class="card-title">${obj.title}</span><br><br><small>${obj.description}</small>
+                        <span class="card-title">${obj.title}</span><br><small>${obj.description}</small>
                     </div>
                     <div class="card-actions">
                             <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
@@ -203,10 +164,17 @@ class BajarListaBoton {
     }
 }
 
-
 class MiLista {
     constructor() {
-        this.obj = document.querySelector('.mi-lista');
+
+        this.obj = document.createElement('div')
+        this.obj.classList.add('mi-lista')
+        this.obj.innerHTML = `<div class="botonera">
+        <button class="mi-lista-button"><i class="fa-solid fa-heart"></i></button>
+        <button class="bajar-lista"><i class="fa-solid fa-floppy-disk"></i></button>
+        <button class="subir-lista"><i class="fa-solid fa-cloud-arrow-up"></i></button>
+        </div>`
+        aside.appendChild(this.obj)
         this.aLaVista = false;
         this.subirListaBoton = new SubirListaBoton()
         this.bajarListaBoton = new BajarListaBoton()
@@ -311,6 +279,46 @@ class MiListaBoton{
 
 // ---------- Fin de seccion ---------------
 
+
+class NavBar{
+    constructor(){
+        this.inicializarNav();
+        this.insertarBotones();
+        this.agregarEvent();
+    }
+
+    inicializarNav(){
+        this.element = document.getElementById('nav-ul')
+    }
+
+    insertarBotones(){
+        this.element.innerHTML = ` <li>
+                                <a href="" id="home" class="nav-a"> <i class="fa-solid fa-house"></i><span>Home</span></a>
+                            </li>                
+                            <li>
+                                <a href="" id="mi-lista" class="nav-a"><i class="fa-solid fa-heart"></i> <span>Mi Lista</span></a>
+                            </li>
+                            <li>
+                                <a href="" id="comming-soon" class="nav-a"> <i class="fa-solid fa-podcast"></i><span>Coming Soon</span></a>
+                            </li>
+                            <li>
+                                <a href="" id="random" class="nav-a"> <i class="fa-solid fa-shuffle" onclick=nav.saludar()></i><span>Random</span></a>
+                            </li>
+                            <li>
+                                <a href="" id="contacto" class="nav-a"><i class="fa-solid fa-square-envelope"></i><span>Contacto</span></a>
+                            </li>`
+    }
+
+    agregarEvent(){
+        const aTagCollection = document.getElementsByClassName('nav-a')
+        for(let i=0 ; i< aTagCollection.length ; i++){
+            let a = aTagCollection[i];
+            a.addEventListener('mouseover',miLista.guardarEnStorage)
+        }
+    }
+
+}
+
 let movies;
 
 let apikey = 'k_t8q4da69'
@@ -335,6 +343,8 @@ firstSearchForm.addEventListener('submit',function (event){
 function sal(){
     console.log(miLista.content.getObj())
 }
+
+let aside = document.querySelector('aside')
 
 let miLista = new MiLista()
 const nav =  new NavBar()

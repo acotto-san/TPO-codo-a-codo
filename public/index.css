@@ -1,0 +1,16 @@
+
+.movies{
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: scroll;
+}
+.first-search-input{
+    font-size: 4rem; 
+    color:var(--color-seis);
+    text-align: center;
+    border-radius: 15px;
+    background-color: var(--color-tres);
+    
+}

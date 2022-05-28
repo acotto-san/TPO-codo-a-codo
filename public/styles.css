@@ -1,22 +1,28 @@
 *{
     box-sizing: border-box;
     font-size: 62.5%;
-    color:#fff;
+    color:var(--color-ocho);
 }
 
 html{
     position: relative;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
+}
+
+h1{
+    font-size: 5rem;
 }
 
 :root{
-    --color-uno: #17183d;
-    --color-dos: #1c1e43;
+    --color-uno: #ffffff;
+    --color-dos: #b9b5b5;
     --color-tres: #1e2046;
-    --color-cuatro: #22254b;
+    --color-cuatro: #d4d4d4;
     --color-cinco: #373b69;
-    --color-seis: #3f446c;
-    --color-siete: #3f4160;
+    --color-seis: #8e8e8f;
+    --color-siete: #a0a0a1;
+    --color-ocho: #000000;
     
 }
 
@@ -24,22 +30,33 @@ body{
     margin: 0;
     display: grid;
     grid-template-areas: "header" "main" "footer";
-    height: 100%;
     background-color: var(--color-cuatro);
     font-family: 'Montserrat', sans-serif;
     /* font-family: 'Varela Round', sans-serif; */
-    
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
 }
 
-
+/* ----------------header-------------------- */
 header{
-    background-color: var(--color-cuatro);
+
     grid-area: header;
-    padding: 1rem;
     align-content: center;
     box-sizing: content-box;
-    height: 5rem;
+    height: 8rem;
     display: flex;
+    width: 100%;
+
+
+    background-color: var(--color-tres);
+}
+
+nav{
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+
 }
 
 header ul{
@@ -50,19 +67,20 @@ header ul{
 li span,i{
     font-size: 2rem;
     margin: 0 0.4rem 0;
+    color: var(--color-cuatro);
 }
 
 header li:hover{
-    background-color: #3f446c;
+    
+    background-color: var(--color-seis);
     border-radius: 5px;
-    padding: 0.2rem;
     transition: transform 5s ease-in;
 }
+
 
 a{
     text-decoration: none;
 }
-
 
 li{
     list-style: none;
@@ -75,7 +93,7 @@ li{
     padding: 0.5rem 1rem;
     border-radius: 50px;
     font-size: 1rem;
-    color: #fff;
+    color: var(--color-cuatro);
 }
 
 .search:focus{
@@ -84,7 +102,7 @@ li{
 }
 
 .search::placeholder{
-    color: #7b82c7a0;
+    color: var(--color-cuatro);
 }
 
 footer{
@@ -92,48 +110,31 @@ footer{
 }
 
 main{
-    height: 100%;
-    position: relative;
     overflow: hidden;
     display: flex;
-
+    width: 100%;
+    height: 100%;
 }
 
 section{
-    height: 100%;
     position: relative;
     display: flex;
     background-color: var(--color-siete);
     max-width: 120rem;
+    height: 100%;
     margin: auto;
 }
 aside{
     width: 3rem;
     display: flex   ;
     overflow: scroll;
+    height: 100vh;
 }
 .movies::-webkit-scrollbar,
 .mi-lista-content::-webkit-scrollbar,
 aside::-webkit-scrollbar {
     display: none;
 }
-
-nav{
-    display: flex;
-    justify-content: space-between;
-    max-width: 1100px;
-    width: 100%;
-    margin: auto;
-}
-
-.movies{
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    overflow: scroll;
-}
-
 
 .movie-card,.favorite-movie-card{
     width: 18rem;
@@ -146,7 +147,7 @@ nav{
 }
 
 .info-card{
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     text-align: center;
 }
 .info-card .card-title{
@@ -175,7 +176,7 @@ nav{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.608);
+    background-color: var(--color-ocho);
     max-height: 100%;
     transform: translateY(101%);
     transition: transform 0.5s ease-in;
@@ -191,7 +192,7 @@ nav{
 }
 
 .card-actions i:hover{
-    color: #1e2046;
+    color: var(--color-dos);
 }
 
 .card-actions i:active{
@@ -201,6 +202,18 @@ nav{
 .movie-card:hover .card-actions,.favorite-movie-card:hover .card-actions{
     transform: translateY(0);
     height: 100%;
+}
+
+.mi-lista{
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateX(87%);
+    transition: transform 0.5s ease-in;
+    font-size: 3rem;
+    display: flex;
+    
 }
 
 .botonera button{
@@ -213,7 +226,7 @@ nav{
 }
 .bajar-lista{
     position: absolute;
-    z-index:997;
+    z-index:1;
     top:0;
     left: 0%;
     right: 0%;
@@ -221,11 +234,11 @@ nav{
 }
 
 .mi-lista-button{
-    z-index: 999;
+    z-index: 2;
 }
 .subir-lista{
     position: absolute;
-    z-index:997;
+    z-index:1;
     top:0;
     left: 0%;
     right: 0%;
@@ -240,80 +253,48 @@ nav{
     flex-direction: column;
     
 }
-.mi-lista{
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    max-height: 100%;
-    transform: translateX(87%);
-    transition: transform 0.5s ease-in;
-    font-size: 3rem;
-    display: flex;
-    width: 33rem;
-}
-
 .mi-lista-content{
-    background-color: #1e2046;
+    background-color: var(--color-seis);
     overflow: scroll;
-    width: 100%;
-    border-left: solid 2px black;
+    border-left: solid 2px var(--color-tres);
     /* box-shadow: -4px 0px 6px white; */
     z-index: 1;
 }
 
-@media (max-width:575px){
-    html{
-        height: -webkit-fill-available; 
-        width: -webkit-fill-available;
-    }
-    body{
-        height: -webkit-fill-available; 
-        width: -webkit-fill-available;
-    }
-    header{
-        height: -webkit-fill-available; 
-        width: -webkit-fill-available;
-    }
-    main,section,article{
-        height: 100vh;
-        width: -webkit-fill-available;
-    }
-    
+
+
+
+
+/* ----------------Media queries----------------- */
+
+
+
+@media (max-width:575px){    
     
 }
 
 @media (min-width:575px) and (max-width:992px) {
-    .movie-card,.favorite-movie-card{
-        width: 15.6rem;
-        height: 26rem;
-        margin: 2rem;
-    }
-
-    nav{
-        display: flex;
-        justify-content: space-between;
-        max-width: 70rem;
-        margin: auto;
-    }
 
 }
 
-@media (min-width:992px) and (max-width:1200px) {
-    .movie-card,.favorite-movie-card{
-        width: 16.8rem;
-        height: 28rem;
-        margin: 3rem;
-    }
-    section{
-        margin: auto;
-    }
-    nav{
-        display: flex;
-        justify-content: space-between;
-        max-width: 85rem;
-        margin: auto;
-    }
+@media(min-width:992px) and (max-width:1200px) {
 
+}
+
+@media (min-width:1200px) {
+    
+
+    body{
+        grid-template-areas: "header" "header" "footer";
+    }
+    nav,section{
+        max-width: 120rem;
+        margin: auto;
+        width: 90%;
+        display: flex;
+        justify-content: center;
+    }
+    
+    
 }
 
