@@ -186,7 +186,7 @@ aside::-webkit-scrollbar {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--color-ocho);
+    background-color:#22222271 ;
     max-height: 100%;
     transform: translateY(101%);
     transition: transform 0.5s ease-in;
@@ -273,6 +273,36 @@ aside::-webkit-scrollbar {
     width: 100%;
 }
 
+.mi-lista-not-init{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mi-lista-not-init>div{
+    border: solid 2px var(--color-tres);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    box-shadow: 3px 2px 5px var(--color-seis);
+
+}
+.mi-lista-not-init img{
+    object-fit:cover;
+    height: 100%;
+}
+
+
+
+.mi-list{
+    background-color: var(--color-cuatro);
+    overflow: scroll;
+    border-left: solid 2px var(--color-tres);
+    /* box-shadow: -4px 0px 6px white; */
+    z-index: 1;
+    width: 100%;
+}
+
 
 
 
@@ -347,6 +377,10 @@ aside::-webkit-scrollbar {
     width: 35rem
     }
 
+    .mi-lista-not-init>div{
+        width: 23rem;
+        height: 31rem;
+    }
 
     
     
