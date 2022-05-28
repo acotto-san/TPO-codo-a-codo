@@ -137,10 +137,32 @@ function conseguirLaTarjetaPadre(btn) {
 
 }
 
+function inicializarBotonesDeMasInfo(){
+    console.log("listo")
+}
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+class Loader{
+    constructor(){
+        const item = document.createElement('div')
+        item.classList.add('lds-roller') 
+        item.innerHTML = `<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>`
+        return item
+    }
+}
+
 function searchMovies(input) {
+    removeAllChildNodes(moviesDiv)
+    const animacion = new Loader()
+    moviesDiv.appendChild(animacion)
     fetch(`https://imdb-api.com/es/API/search/${apikey}/${input}`)
         .then(response => response.json())
-        .then(data => data.results.forEach(element => crearNuevaTarjeta(element)));
+        .then(data => data.results.forEach(element => crearNuevaTarjeta(element)))
+        .then(()=> animacion.remove())
+        .then(()=>{inicializarBotonesDeMasInfo()});
     // pelis.results.forEach(element => crearNuevaTarjeta(element))
 }
 
@@ -305,16 +327,18 @@ class MiListaBoton {
 class NavBar {
     constructor() {
         this.inicializarNav();
-        this.insertarBotones();
-        this.agregarEvent();
+        this.insertarUlContent();
+        this.agregarEventosEnUl();
+        this.agregarEventosEnForm();
     }
 
     inicializarNav() {
-        this.element = document.getElementById('nav-ul')
+        this.ul = document.getElementById('nav-ul')
+        this.form = document.getElementById('nav-search-form')
     }
 
-    insertarBotones() {
-        this.element.innerHTML = ` <li>
+    insertarUlContent() {
+        this.ul.innerHTML = ` <li>
                                 <a href="" id="home" class="nav-a"> <i class="fa-solid fa-house"></i><span>Home</span></a>
                             </li>                
                             <li>
@@ -331,12 +355,30 @@ class NavBar {
                             </li>`
     }
 
-    agregarEvent() {
+    agregarEventosEnUl() {
         const aTagCollection = document.getElementsByClassName('nav-a')
         for (let i = 0; i < aTagCollection.length; i++) {
             let a = aTagCollection[i];
             a.addEventListener('mouseover', miLista.guardarEnStorage)
         }
+    }
+
+
+    agregarEventosEnForm(){
+
+        const navForm = document.getElementById('nav-search-form')
+        navForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+        
+            const searchInput = navForm.elements['nav-search-input'].value
+            if (searchInput.trim() === "") {
+                console.log("Error con el input de la busqueda")
+            } else {
+                searchMovies(searchInput);
+                firstSearchForm.parentNode.remove()
+            }
+        })
     }
 
 }
