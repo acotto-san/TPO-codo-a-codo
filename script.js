@@ -1,8 +1,8 @@
 
 
 // -----------------header------------------
-class Header{
-    constructor(){
+class Header {
+    constructor() {
         this.contacto = document.querySelector('.nav-contacto')
     }
 }
@@ -109,6 +109,9 @@ function crearNuevaTarjeta(obj) {
 }
 
 function agregarAMiListaContent(btn) {
+    if (!miLista.content.iniciado) {
+        miLista.content.iniciarPorPrimeraVez()
+    }
     miLista.content.setChild(clonarTarjetaPadreDelBotton(btn));
     miLista.guardarEnStorage();
 }
@@ -118,9 +121,9 @@ function clonarTarjetaPadreDelBotton(btn) {
     const movieId = btn.getAttribute('movieid')
     const tarjetaACopiar = document.querySelector(`.movie-card.${movieId}`)
     tarjetaNueva.classList.add('favorite-movie-card')
-    tarjetaNueva.setAttribute('favorite-id',movieId)
+    tarjetaNueva.setAttribute('favorite-id', movieId)
     tarjetaNueva.innerHTML = tarjetaACopiar.innerHTML
-    
+
     tarjetaNueva.querySelector('.add-to-my-list').remove()
     tarjetaNueva.querySelector('.card-actions').innerHTML += `
                         <a class="remove-from-my-list" movieid="${movieId}" onclick=removeMeFromFavList(this)><i class="fa-solid fa-heart-circle-minus fa-sm"></i></a>`
@@ -136,14 +139,17 @@ function conseguirLaTarjetaPadre(btn) {
 
 function searchMovies(input) {
     fetch(`https://imdb-api.com/es/API/search/${apikey}/${input}`)
-    .then(response => response.json())
-    .then(data => data.results.forEach(element => crearNuevaTarjeta(element)));
+        .then(response => response.json())
+        .then(data => data.results.forEach(element => crearNuevaTarjeta(element)));
     // pelis.results.forEach(element => crearNuevaTarjeta(element))
 }
 
-function removeMeFromFavList(element){
+function removeMeFromFavList(element) {
     document.querySelector(`[favorite-id="${element.getAttribute('movieId')}"]`).remove()
     miLista.guardarEnStorage()
+    if (document.querySelector('.mi-lista-content').childElementCount == 0) {
+        miLista.content.marcarComoNoIniciado()
+    }
 }
 
 
@@ -183,7 +189,7 @@ class MiLista {
         this.setChild(this.content.getObj())
 
     }
-    getObj(){
+    getObj() {
         return this.obj
     }
 
@@ -200,79 +206,89 @@ class MiLista {
         this.aLaVista = !this.aLaVista;
     }
 
-    getContent(){
+    getContent() {
         return this.content
     }
 
-    setChild(element){
+    setChild(element) {
         this.obj.appendChild(element)
     }
 
-    
-    guardarEnStorage(){
+
+    guardarEnStorage() {
         let miListaContent = document.querySelector('.mi-lista-content')
-        localStorage.setItem('miListaContentInnerHtml',miListaContent.innerHTML)
+        localStorage.setItem('miListaContentInnerHtml', miListaContent.innerHTML)
     }
 
 
 }
 
-class MiListaContent{
-    constructor(element = null){
-        if (localStorage.getItem('miListaContentInnerHtml') && localStorage.getItem('miListaContentInnerHtml')!=="undefined"){
+class MiListaContent {
+    constructor(element = null) {
+        if (localStorage.getItem('miListaContentInnerHtml') && localStorage.getItem('miListaContentInnerHtml') !== "undefined") {
             this.obj = document.createElement('div')
             this.obj.className = 'mi-lista-content'
             this.obj.innerHTML = localStorage.getItem('miListaContentInnerHtml')
             console.log('lista encontrada')
             console.log(this.obj)
-        }else{
+        } else {
             this.obj = document.createElement('div')
-            this.obj.className = 'mi-lista-content'
-            console.log('nueva lista')
-            this.obj.innerHTML = ""
-            console.log(this.obj.innerHTML)
+            this.obj.classList.add('mi-lista-content')
+            this.marcarComoNoIniciado()
         }
-        
+
     }
 
-    setObj(element){
+    setObj(element) {
         this.obj = element
     }
 
-    getObj(){
+    getObj() {
         return this.obj
     }
 
-    setChild(element){
+    setChild(element) {
         this.obj.appendChild(element)
     }
 
+    marcarComoNoIniciado() {
+        this.obj.classList.add('mi-lista-not-init')
+        this.obj.innerHTML = `<div><img src="./assets/lista-guia.png"></div>`
+        this.iniciado = false
+
+    }
+
+    iniciarPorPrimeraVez() {
+        this.obj.classList.remove('mi-lista-not-init')
+        this.obj.innerHTML = ""
+        this.iniciado = true
+    }
 
 }
 
-class SubirListaBoton{
-    constructor(){
+class SubirListaBoton {
+    constructor() {
         this.boton = document.querySelector('.subir-lista')
     }
-    mostrar(){
+    mostrar() {
         this.boton.style.transform = 'translate(-100%,100%)';
     }
-    ocultar(){
+    ocultar() {
         this.boton.style.transform = 'translate(-100%,0%)'
     }
 }
 
-class MiListaBoton{
-    constructor(){
+class MiListaBoton {
+    constructor() {
         this.boton = document.querySelector('.mi-lista-button')
-        this.boton.addEventListener('click',()=>{
+        this.boton.addEventListener('click', () => {
             if (miLista.aLaVista) {
                 miLista.ocultar()
             } else {
                 miLista.mostrar()
             }
         })
-    } 
+    }
 
 }
 
@@ -280,18 +296,18 @@ class MiListaBoton{
 // ---------- Fin de seccion ---------------
 
 
-class NavBar{
-    constructor(){
+class NavBar {
+    constructor() {
         this.inicializarNav();
         this.insertarBotones();
         this.agregarEvent();
     }
 
-    inicializarNav(){
+    inicializarNav() {
         this.element = document.getElementById('nav-ul')
     }
 
-    insertarBotones(){
+    insertarBotones() {
         this.element.innerHTML = ` <li>
                                 <a href="" id="home" class="nav-a"> <i class="fa-solid fa-house"></i><span>Home</span></a>
                             </li>                
@@ -309,11 +325,11 @@ class NavBar{
                             </li>`
     }
 
-    agregarEvent(){
+    agregarEvent() {
         const aTagCollection = document.getElementsByClassName('nav-a')
-        for(let i=0 ; i< aTagCollection.length ; i++){
+        for (let i = 0; i < aTagCollection.length; i++) {
             let a = aTagCollection[i];
-            a.addEventListener('mouseover',miLista.guardarEnStorage)
+            a.addEventListener('mouseover', miLista.guardarEnStorage)
         }
     }
 
@@ -328,25 +344,25 @@ const moviesDiv = document.querySelector('.movies')
 
 const firstSearchForm = document.getElementById('first-search-form');
 
-firstSearchForm.addEventListener('submit',function (event){
+firstSearchForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
     const searchInput = firstSearchForm.elements['first-search-input'].value
-    if (searchInput.trim() === ""){
+    if (searchInput.trim() === "") {
         console.log("Error con el input de la busqueda")
-    }else{
+    } else {
         searchMovies(searchInput);
         firstSearchForm.parentNode.remove()
     }
 })
 
-function sal(){
+function sal() {
     console.log(miLista.content.getObj())
 }
 
 let aside = document.querySelector('aside')
 
 let miLista = new MiLista()
-const nav =  new NavBar()
+const nav = new NavBar()
 
 
