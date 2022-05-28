@@ -312,7 +312,9 @@ aside::-webkit-scrollbar {
 
 
 @media (max-width:575px){    
-    
+    .mi-lista{
+        width: 25rem
+        }
 }
 
 @media (min-width:575px) and (max-width:992px) {
@@ -374,7 +376,7 @@ aside::-webkit-scrollbar {
     }
 
     .mi-lista{
-    width: 35rem
+    width: 33rem
     }
 
     .mi-lista-not-init>div{

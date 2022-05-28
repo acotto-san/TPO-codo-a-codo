@@ -109,7 +109,7 @@ function crearNuevaTarjeta(obj) {
 }
 
 function agregarAMiListaContent(btn) {
-    if (!miLista.content.iniciado) {
+    if (!miLista.content.consultarSiIniciado()) {
         miLista.content.iniciarPorPrimeraVez()
     }
     miLista.content.setChild(clonarTarjetaPadreDelBotton(btn));
@@ -225,7 +225,9 @@ class MiLista {
 
 class MiListaContent {
     constructor(element = null) {
-        if (localStorage.getItem('miListaContentInnerHtml') && localStorage.getItem('miListaContentInnerHtml') !== "undefined") {
+
+        
+        if (this.consultarSiIniciado()) {
             this.obj = document.createElement('div')
             this.obj.className = 'mi-lista-content'
             this.obj.innerHTML = localStorage.getItem('miListaContentInnerHtml')
@@ -237,6 +239,10 @@ class MiListaContent {
             this.marcarComoNoIniciado()
         }
 
+    }
+
+    consultarSiIniciado(){
+        return localStorage.getItem('miListaInitStatus')=="true"
     }
 
     setObj(element) {
@@ -254,14 +260,14 @@ class MiListaContent {
     marcarComoNoIniciado() {
         this.obj.classList.add('mi-lista-not-init')
         this.obj.innerHTML = `<div><img src="./assets/lista-guia.png"></div>`
-        this.iniciado = false
+        localStorage.setItem('miListaInitStatus','false')
 
     }
 
     iniciarPorPrimeraVez() {
         this.obj.classList.remove('mi-lista-not-init')
         this.obj.innerHTML = ""
-        this.iniciado = true
+        localStorage.setItem('miListaInitStatus','true')
     }
 
 }
