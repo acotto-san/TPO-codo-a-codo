@@ -78,11 +78,11 @@ class BajarListaBoton {
     }
 
     mostrar() {
-        this.boton.style.transform = 'translateY(200%)'
+        this.boton.style.transform = 'translate(-100%,200%)';
     }
 
     ocultar() {
-        this.boton.style.transform = 'translateY(0%)'
+        this.boton.style.transform = 'translate(-100%,0%)'
     }
 }
 
@@ -116,7 +116,7 @@ class MiLista {
         this.aLaVista = !this.aLaVista;
     }
     ocultar() {
-        this.obj.style.transform = 'translateX(87%)';
+        this.obj.style.transform = 'translateX(99.5%)';
         this.bajarListaBoton.ocultar();
         this.subirListaBoton.ocultar();
         this.aLaVista = !this.aLaVista;
@@ -177,10 +177,10 @@ class SubirListaBoton{
         this.boton = document.querySelector('.subir-lista')
     }
     mostrar(){
-        this.boton.style.transform = 'translateY(100%)'
+        this.boton.style.transform = 'translate(-100%,100%)';
     }
     ocultar(){
-        this.boton.style.transform = 'translateY(0%)'
+        this.boton.style.transform = 'translate(-100%,0%)'
     }
 }
 
