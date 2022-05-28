@@ -1,7 +1,7 @@
 *{
     box-sizing: border-box;
     font-size: 62.5%;
-    color:var(--color-ocho);
+    color:var(--color-uno);
 }
 
 html{
@@ -16,12 +16,12 @@ h1{
 
 :root{
     --color-uno: #ffffff;
-    --color-dos: #b9b5b5;
+    --color-dos: #000000;
     --color-tres: #1e2046;
     --color-cuatro: #d4d4d4;
     --color-cinco: #373b69;
     --color-seis: #8e8e8f;
-    --color-siete: #a0a0a1;
+    --color-siete: #484061;
     --color-ocho: #000000;
     --width-uno: 30rem;
     
@@ -54,6 +54,7 @@ header{
 }
 
 nav{
+    margin: auto;
     padding: 2rem;
     display: flex;
     justify-content: space-between;
@@ -63,6 +64,7 @@ nav{
 header ul{
     display: flex;
     margin: 0;
+    justify-content: flex-start;
 }
 
 li span,i{
@@ -79,8 +81,10 @@ header li:hover{
 }
 
 
-a{
+
+a,ul{
     text-decoration: none;
+    padding: 0;
 }
 
 li{
@@ -118,15 +122,17 @@ main{
 }
 
 section{
+
     position: relative;
     display: flex;
     background-color: var(--color-siete);
     max-width: 120rem;
     height: 100%;
     margin: auto;
+    justify-content: center;
+
 }
 aside{
-    width: 3rem;
     display: flex   ;
     overflow: scroll;
     height: 100vh;
@@ -143,7 +149,7 @@ aside::-webkit-scrollbar {
     margin: 4rem;
     overflow: hidden;
     position: relative;
-    background-color: var(--color-cuatro);
+    background-color: var(--color-tres);
     border-radius: 5px;
 }
 .favorite-movie-card{
@@ -213,7 +219,7 @@ aside::-webkit-scrollbar {
     right: 0;
     top: 0;
     bottom: 0;
-    transform: translateX(87%);
+    transform: translateX(99.5%);
     transition: transform 0.5s ease-in;
     font-size: 3rem;
     display: flex;
@@ -222,32 +228,32 @@ aside::-webkit-scrollbar {
 }
 
 .botonera button{
+    position: absolute;
     transition: transform 0.5s ease-in;
     background-color: #1e2046;
     align-self: center;
     border-radius: 5px 0px 0px 5px;
     padding: 1rem;
     width: 100%;
-}
-.bajar-lista{
-    position: absolute;
-    z-index:1;
-    top:0;
+    top:0%;
     left: 0%;
     right: 0%;
-    transform: translateY(0%);
+    transform: translate(-100%,0%);
+    width: 5rem;
+
+}
+.bajar-lista{
+    z-index:997;
+
 }
 
 .mi-lista-button{
-    z-index: 2;
+    z-index: 999;
+    
 }
 .subir-lista{
-    position: absolute;
-    z-index:1;
-    top:0;
-    left: 0%;
-    right: 0%;
-    transform: translateY(0%);
+    z-index:998;
+
 }
 
 .botonera{
@@ -259,12 +265,11 @@ aside::-webkit-scrollbar {
     
 }
 .mi-lista-content{
-    background-color: var(--color-seis);
+    background-color: var(--color-cuatro);
     overflow: scroll;
     border-left: solid 2px var(--color-tres);
     /* box-shadow: -4px 0px 6px white; */
     z-index: 1;
-    background-color: #8e8e8f;
     width: 100%;
 }
 
@@ -281,15 +286,44 @@ aside::-webkit-scrollbar {
 }
 
 @media (min-width:575px) and (max-width:992px) {
+    body{
+        grid-template-areas: "header" "header" "footer";
+    }
+    nav,section{
+        max-width: 92rem;
+        width: 95%;
+        display: flex;
+    }
+    nav form{
+        align-self: center;
+        margin-right: 3rem;
+    }
+
+    .mi-lista{
+    width: 27rem
+    }
 
 }
 
 @media(min-width:992px) and (max-width:1200px) {
 
+    body{
+        grid-template-areas: "header" "header" "footer";
+    }
+    nav,section{
+        max-width: 998rem;
+        width: 90%;
+        display: flex;
+    }
+    nav form{
+        align-self: center;
+        margin-right: 4rem;
+    }
 
     .mi-lista{
-        width: 30rem
-        }
+    width: 30rem
+    }
+
 }
 
 @media (min-width:1200px) {
@@ -300,15 +334,20 @@ aside::-webkit-scrollbar {
     }
     nav,section{
         max-width: 120rem;
-        margin: auto;
-        width: 90%;
+
+        width: 80%;
         display: flex;
-        justify-content: center;
+    }
+    nav form{
+        align-self: center;
+        margin-right: 4rem;
     }
 
     .mi-lista{
     width: 35rem
     }
+
+
     
     
 }

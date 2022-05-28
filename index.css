@@ -5,6 +5,7 @@
     flex-wrap: wrap;
     justify-content: center;
     overflow: scroll;
+    align-items: center;
 }
 .first-search-input{
     font-size: 4rem; 
