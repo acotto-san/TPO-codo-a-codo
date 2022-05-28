@@ -38,13 +38,13 @@ class MiLista {
     }
 
     mostrar() {
-        this.obj.style.transform = 'translateX(3%)';
+        this.obj.style.transform = 'translateX(0%)';
         this.bajarListaBoton.mostrar();
         this.subirListaBoton.mostrar();
         this.aLaVista = !this.aLaVista;
     }
     ocultar() {
-        this.obj.style.transform = 'translateX(87%)';
+        this.obj.style.transform = 'translateX(99.5%)';
         this.bajarListaBoton.ocultar();
         this.subirListaBoton.ocultar();
         this.aLaVista = !this.aLaVista;
