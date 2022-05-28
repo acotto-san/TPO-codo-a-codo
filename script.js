@@ -188,7 +188,7 @@ class MiLista {
     }
 
     mostrar() {
-        this.obj.style.transform = 'translateX(3%)';
+        this.obj.style.transform = 'translateX(0%)';
         this.bajarListaBoton.mostrar();
         this.subirListaBoton.mostrar();
         this.aLaVista = !this.aLaVista;
@@ -305,7 +305,7 @@ class NavBar{
                                 <a href="" id="random" class="nav-a"> <i class="fa-solid fa-shuffle" onclick=nav.saludar()></i><span>Random</span></a>
                             </li>
                             <li>
-                                <a href="" id="contacto" class="nav-a"><i class="fa-solid fa-square-envelope"></i><span>Contacto</span></a>
+                                <a href="./contacto.html" id="contacto" class="nav-a"><i class="fa-solid fa-square-envelope"></i><span>Contacto</span></a>
                             </li>`
     }
 
