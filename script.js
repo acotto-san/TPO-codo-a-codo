@@ -31,7 +31,7 @@ function crearNuevaTarjeta(obj) {
 }
 
 function agregarAMiListaContent(btn) {
-    if (!miLista.content.iniciado) {
+    if (!miLista.content.consultarSiIniciado()) {
         miLista.content.iniciarPorPrimeraVez()
     }
     miLista.content.setChild(clonarTarjetaPadreDelBotton(btn));
@@ -59,10 +59,32 @@ function conseguirLaTarjetaPadre(btn) {
 
 }
 
+function inicializarBotonesDeMasInfo(){
+    console.log("listo")
+}
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+class Loader{
+    constructor(){
+        const item = document.createElement('div')
+        item.classList.add('lds-roller') 
+        item.innerHTML = `<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>`
+        return item
+    }
+}
+
 function searchMovies(input) {
+    removeAllChildNodes(moviesDiv)
+    const animacion = new Loader()
+    moviesDiv.appendChild(animacion)
     fetch(`https://imdb-api.com/es/API/search/${apikey}/${input}`)
         .then(response => response.json())
-        .then(data => data.results.forEach(element => crearNuevaTarjeta(element)));
+        .then(data => data.results.forEach(element => crearNuevaTarjeta(element)))
+        .then(()=> animacion.remove())
+        .then(()=>{inicializarBotonesDeMasInfo()});
     // pelis.results.forEach(element => crearNuevaTarjeta(element))
 }
 
@@ -147,7 +169,9 @@ class MiLista {
 
 class MiListaContent {
     constructor(element = null) {
-        if (localStorage.getItem('miListaContentInnerHtml') && localStorage.getItem('miListaContentInnerHtml') !== "undefined") {
+
+        
+        if (this.consultarSiIniciado()) {
             this.obj = document.createElement('div')
             this.obj.className = 'mi-lista-content'
             this.obj.innerHTML = localStorage.getItem('miListaContentInnerHtml')
@@ -159,6 +183,10 @@ class MiListaContent {
             this.marcarComoNoIniciado()
         }
 
+    }
+
+    consultarSiIniciado(){
+        return localStorage.getItem('miListaInitStatus')=="true"
     }
 
     setObj(element) {
@@ -176,14 +204,14 @@ class MiListaContent {
     marcarComoNoIniciado() {
         this.obj.classList.add('mi-lista-not-init')
         this.obj.innerHTML = `<div><img src="./assets/lista-guia.png"></div>`
-        this.iniciado = false
+        localStorage.setItem('miListaInitStatus','false')
 
     }
 
     iniciarPorPrimeraVez() {
         this.obj.classList.remove('mi-lista-not-init')
         this.obj.innerHTML = ""
-        this.iniciado = true
+        localStorage.setItem('miListaInitStatus','true')
     }
 
 }
@@ -221,16 +249,18 @@ class MiListaBoton {
 class NavBar {
     constructor() {
         this.inicializarNav();
-        this.insertarBotones();
-        this.agregarEvent();
+        this.insertarUlContent();
+        this.agregarEventosEnUl();
+        this.agregarEventosEnForm();
     }
 
     inicializarNav() {
-        this.element = document.getElementById('nav-ul')
+        this.ul = document.getElementById('nav-ul')
+        this.form = document.getElementById('nav-search-form')
     }
 
-    insertarBotones() {
-        this.element.innerHTML = ` <li>
+    insertarUlContent() {
+        this.ul.innerHTML = ` <li>
                                 <a href="" id="home" class="nav-a"> <i class="fa-solid fa-house"></i><span>Home</span></a>
                             </li>                
                             <li>
@@ -247,12 +277,30 @@ class NavBar {
                             </li>`
     }
 
-    agregarEvent() {
+    agregarEventosEnUl() {
         const aTagCollection = document.getElementsByClassName('nav-a')
         for (let i = 0; i < aTagCollection.length; i++) {
             let a = aTagCollection[i];
             a.addEventListener('mouseover', miLista.guardarEnStorage)
         }
+    }
+
+
+    agregarEventosEnForm(){
+
+        const navForm = document.getElementById('nav-search-form')
+        navForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+        
+            const searchInput = navForm.elements['nav-search-input'].value
+            if (searchInput.trim() === "") {
+                console.log("Error con el input de la busqueda")
+            } else {
+                searchMovies(searchInput);
+                firstSearchForm.parentNode.remove()
+            }
+        })
     }
 
 }
