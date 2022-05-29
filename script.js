@@ -292,7 +292,7 @@ function crearNuevaTarjeta(obj) {
                         <img src="${obj.image}" alt="imagen de la pelicula">
                     </div>
                     <div class="info-card">
-                        <span class="card-title">${obj.title}</span><br><small>${obj.description}</small>
+                        <span class="card-title">${obj.title}</span><small>${obj.description}</small>
                     </div>
                     <div class="card-actions">
                             <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
