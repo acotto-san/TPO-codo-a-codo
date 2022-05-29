@@ -32,7 +32,7 @@ h1{
     --header-height:        8rem;
     --footer-height:        5rem;
     
-    --fstform-fsize:        4rem;
+    --fstform-fsize:        8rem;
     --fstsearch-fsize:      4rem;
 
 
@@ -40,6 +40,9 @@ h1{
     --card-height:          30rem;
     --card-margin:          4rem;
     --card-fsize:           2rem;
+
+    --card-notinit-width:   23rem;
+    --card-notinit-height:  31rem;
 
     --nav-spani-fsize:      2rem;
 }
@@ -158,10 +161,14 @@ section{
     align-items: center;
 
 }
-
+form *{
+    font-family: 'Montserrat', sans-serif;
+}
 form h1{
     font-size: var(--fstform-fsize);
+    font-family: 'Fredoka', sans-serif;
 }
+
 aside{
     display: flex   ;
     overflow: scroll;
@@ -335,6 +342,10 @@ aside::-webkit-scrollbar {
     justify-content: center;
     box-shadow: 3px 2px 5px var(--color-seis);
 
+
+    width: var(--card-notinit-width);
+    height:var(--card-notinit-height);
+
 }
 .mi-lista-not-init img{
     object-fit:cover;
@@ -415,6 +426,11 @@ aside::-webkit-scrollbar {
     .botonera button{
         top: 35%;
     }
+    .mi-lista-not-init>div{
+        width: calc(var(--card-notinit-width) * 0.7);
+        height:calc(var(--card-notinit-height) * 0.7);
+    }
+
 }
 
 @media (min-width:575px) and (max-width:992px) {
@@ -426,11 +442,11 @@ aside::-webkit-scrollbar {
     nav span{
         display: none;
     }
-    a{
+    /* a{
         display: flex;
         flex-direction: column;
         align-items: center;
-    }
+    } */
 
     nav,section{
         max-width: 92rem;
@@ -444,12 +460,20 @@ aside::-webkit-scrollbar {
     .mi-lista{
     width: 27rem
     }
+    .botonera button{
+        top: 38%;
+    }
+    .mi-lista-not-init>div{
+        width: calc(var(--card-notinit-width) * 0.8);
+        height:calc(var(--card-notinit-height) * 0.8);
+    }
+
 
 }
 
 @media(min-width:992px) and (max-width:1200px) {
 
-    nav span,i{
+    nav span,nav i{
         font-size: calc(var(--nav-spani-fsize) / 1.3);
     }
     nav,section{
@@ -466,6 +490,11 @@ aside::-webkit-scrollbar {
     width: 30rem
     }
 
+    .mi-lista-not-init>div{
+        width: calc(var(--card-notinit-width) * 0.9);
+        height:calc(var(--card-notinit-height) * 0.9);
+    }
+
 }
 
 @media (min-width:1200px) {
@@ -480,10 +509,6 @@ aside::-webkit-scrollbar {
     width: 33rem
     }
 
-    .mi-lista-not-init>div{
-        width: 23rem;
-        height: 31rem;
-    }
 
     
     
