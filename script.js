@@ -64,13 +64,13 @@ class MiLista {
     }
 
     mostrar() {
-        this.obj.style.transform = 'translateX(0%)';
+        this.obj.style.transform = 'translateX(-100%)';
         this.bajarListaBoton.mostrar();
         this.subirListaBoton.mostrar();
         this.aLaVista = !this.aLaVista;
     }
     ocultar() {
-        this.obj.style.transform = 'translateX(99.5%)';
+        this.obj.style.transform = 'translateX(0%)';
         this.bajarListaBoton.ocultar();
         this.subirListaBoton.ocultar();
         this.aLaVista = !this.aLaVista;
@@ -187,16 +187,16 @@ class NavBar {
 
     insertarUlContent() {
         this.ul.innerHTML = ` <li>
-                                <a href="" id="home" class="nav-a"> <i class="fa-solid fa-house"></i><span>Home</span></a>
+                                <a href="./" id="home" class="nav-a"> <i class="fa-solid fa-house"></i><span>Home</span></a>
                             </li>                
                             <li>
-                                <a href="" id="mi-lista" class="nav-a"><i class="fa-solid fa-heart"></i> <span>Mi Lista</span></a>
+                                <a href="./mi-lista.html" id="mi-lista" class="nav-a"><i class="fa-solid fa-heart"></i> <span>Mi Lista</span></a>
                             </li>
                             <li>
-                                <a href="" id="comming-soon" class="nav-a"> <i class="fa-solid fa-podcast"></i><span>Coming Soon</span></a>
+                                <a href="./coming-soon.html" id="comming-soon" class="nav-a"> <i class="fa-solid fa-podcast"></i><span>Coming Soon</span></a>
                             </li>
                             <li>
-                                <a href="" id="random" class="nav-a"> <i class="fa-solid fa-shuffle" onclick=nav.saludar()></i><span>Random</span></a>
+                                <a href="./random.html" id="random" class="nav-a"> <i class="fa-solid fa-shuffle" onclick=nav.saludar()></i><span>Random</span></a>
                             </li>
                             <li>
                                 <a href="./contacto.html" id="contacto" class="nav-a"><i class="fa-solid fa-square-envelope"></i><span>Contacto</span></a>
@@ -374,9 +374,9 @@ class Loader{
 
 
 
-
+nav = new NavBar()
 function onload(){
-    nav = new NavBar()
+    
     switch(location.pathname){
         case '/':
             onloadIndex();

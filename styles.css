@@ -24,12 +24,21 @@ h1{
     --color-siete: #484061;
     --color-ocho: #000000;
     --width-uno: 30rem;
+
+
+    --header-color: #1e2046;
+    --header-height: 8rem;
+    --footer-height: 5rem;
     
 }
 
 body{
-    
-    margin: 0;
+
+
+
+
+
+    margin: var(--header-height) 0 var(--footer-height) 0;
     display: grid;
     grid-template-areas: "header" "main" "footer";
     background-color: var(--color-cuatro);
@@ -42,16 +51,17 @@ body{
 
 /* ----------------header-------------------- */
 header{
-
+    position: fixed;
+    top: 0;
+    left: 0;
     grid-area: header;
     align-content: center;
     box-sizing: content-box;
-    height: 8rem;
+    height: var(--header-height);
     display: flex;
     width: 100%;
 
-
-    background-color: var(--color-tres);
+    background-color: var(--header-color);
 }
 
 nav{
@@ -113,6 +123,12 @@ li{
 
 footer{
     grid-area: footer;
+    height: var(--footer-height);
+    width: 100%;
+    background-color: var(--header-color);
+    position: fixed;
+    bottom: 0;
+    left: 0;
 }
 
 main{
@@ -216,7 +232,7 @@ aside::-webkit-scrollbar {
 }
 
 .mi-lista{
-    position: absolute;
+    /* position: absolute;
     right: 0;
     top: 0;
     bottom: 0;
@@ -224,8 +240,16 @@ aside::-webkit-scrollbar {
     transition: transform 0.5s ease-in;
     font-size: 3rem;
     display: flex;
-    
-    
+     */
+
+    position: fixed;
+    right: 100;
+    top: 0;
+    transition: transform 0.5s ease-in;
+    font-size: 3rem;
+    display: flex;
+    margin: var(--header-height) 0 var(--footer-height) 0;
+    height: 100%;
 }
 
 .botonera button{
@@ -236,9 +260,9 @@ aside::-webkit-scrollbar {
     border-radius: 5px 0px 0px 5px;
     padding: 1rem;
     width: 100%;
-    top:0%;
-    left: 0%;
-    right: 0%;
+    left: 0;
+    top: 40%;
+
     transform: translate(-100%,0%);
     width: 5rem;
 
@@ -258,8 +282,9 @@ aside::-webkit-scrollbar {
 }
 
 .botonera{
-    position: relative;
-    align-self: center;
+    /* position: relative; */
+    align-items: center;
+    height: 100%;
     z-index: 2;
     display: flex;
     flex-direction: column;
@@ -295,14 +320,14 @@ aside::-webkit-scrollbar {
 
 
 
-.mi-list{
+/* .mi-list{
     background-color: var(--color-cuatro);
     overflow: scroll;
     border-left: solid 2px var(--color-tres);
-    /* box-shadow: -4px 0px 6px white; */
+    box-shadow: -4px 0px 6px white;
     z-index: 1;
     width: 100%;
-}
+} */
 
 
 
@@ -316,6 +341,16 @@ aside::-webkit-scrollbar {
     .mi-lista{
         width: 25rem
         }
+    nav span{
+        display: none;
+    }
+    nav li{
+        margin: 0;
+        padding: 0;
+    }
+    nav form{
+        margin: 0 0 0 0.9rem;
+    }
 }
 
 @media (min-width:575px) and (max-width:992px) {
