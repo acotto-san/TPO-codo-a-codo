@@ -28,6 +28,7 @@ h1{
 }
 
 body{
+    
     margin: 0;
     display: grid;
     grid-template-areas: "header" "main" "footer";
@@ -476,4 +477,3 @@ aside::-webkit-scrollbar {
       transform: rotate(360deg);
     }
   }
-  

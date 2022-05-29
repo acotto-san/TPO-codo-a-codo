@@ -13,7 +13,7 @@
     <link href="./assets/fontawesome/css/all.css" rel="stylesheet">
     <title>Movie a Movie</title>
 </head>
-<body >
+<body onload="onload()">
     <header>
         <nav>
             <ul id="nav-ul">
@@ -27,20 +27,175 @@
     </header>
     <main>
         <section>
-            <article class="movies">
-                <div class="form-container">
-                    <form action="" id="first-search-form" style="text-align: center;">
-                        <h1>Movie a Movie : <br><br> Tu biblioteca de cine</h1>
-                        <input type="text" placeholder="Buscar" id="first-search-input"  class="first-search-input">
-                    </form>
-                </div>
-            </article>
+            <article class="movies"><div class="movie-card tt1877830">
+
+                    <div class="img-card">
+                        <img src="https://imdb-api.com/images/original/MV5BMDdmMTBiNTYtMDIzNi00NGVlLWIzMDYtZTk3MTQ3NGQxZGEwXkEyXkFqcGdeQXVyMzMwOTU5MDk@._V1_Ratio0.7273_AL_.jpg" alt="imagen de la pelicula">
+                    </div>
+                    <div class="info-card">
+                        <span class="card-title">The Batman</span><br><small>(2022)</small>
+                    </div>
+                    <div class="card-actions">
+                            <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="add-to-my-list" movieid="tt1877830" onclick="agregarAMiListaContent(this)"><i class="fa-solid fa-heart-circle-plus fa-sm"></i></a>
+                    </div>
+                    
+</div><div class="movie-card tt0096895">
+
+                    <div class="img-card">
+                        <img src="https://imdb-api.com/images/original/MV5BZTM2NmZlOTEtYTI5NS00N2JjLWJkNzItMmZkNDBlYmQzNDA2XkEyXkFqcGdeQXVyMTAxODYyODI@._V1_Ratio0.7273_AL_.jpg" alt="imagen de la pelicula">
+                    </div>
+                    <div class="info-card">
+                        <span class="card-title">Batman</span><br><small>(1989)</small>
+                    </div>
+                    <div class="card-actions">
+                            <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="add-to-my-list" movieid="tt0096895" onclick="agregarAMiListaContent(this)"><i class="fa-solid fa-heart-circle-plus fa-sm"></i></a>
+                    </div>
+                    
+</div><div class="movie-card tt0059968">
+
+                    <div class="img-card">
+                        <img src="https://imdb-api.com/images/original/MV5BMTkzNDY5NTg5MF5BMl5BanBnXkFtZTgwNzI4NzM1MjE@._V1_Ratio0.7727_AL_.jpg" alt="imagen de la pelicula">
+                    </div>
+                    <div class="info-card">
+                        <span class="card-title">Batman</span><br><small>(1966) (TV Series)</small>
+                    </div>
+                    <div class="card-actions">
+                            <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="add-to-my-list" movieid="tt0059968" onclick="agregarAMiListaContent(this)"><i class="fa-solid fa-heart-circle-plus fa-sm"></i></a>
+                    </div>
+                    
+</div><div class="movie-card tt0468569">
+
+                    <div class="img-card">
+                        <img src="https://imdb-api.com/images/original/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_Ratio0.7273_AL_.jpg" alt="imagen de la pelicula">
+                    </div>
+                    <div class="info-card">
+                        <span class="card-title">The Dark Knight</span><br><small>(2008) aka "Batman - El caballero de la noche"</small>
+                    </div>
+                    <div class="card-actions">
+                            <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="add-to-my-list" movieid="tt0468569" onclick="agregarAMiListaContent(this)"><i class="fa-solid fa-heart-circle-plus fa-sm"></i></a>
+                    </div>
+                    
+</div><div class="movie-card tt15124208">
+
+                    <div class="img-card">
+                        <img src="https://imdb-api.com/images/original/MV5BYzg0ODIyNzUtYjk2NS00ZTViLTlhZmYtYWIyMmRiOWE4Y2MxXkEyXkFqcGdeQXVyMTIzOTg0NzAy._V1_Ratio1.9091_AL_.jpg" alt="imagen de la pelicula">
+                    </div>
+                    <div class="info-card">
+                        <span class="card-title">Batman Unburied</span><br><small>(2021) (Podcast Series)</small>
+                    </div>
+                    <div class="card-actions">
+                            <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="add-to-my-list" movieid="tt15124208" onclick="agregarAMiListaContent(this)"><i class="fa-solid fa-heart-circle-plus fa-sm"></i></a>
+                    </div>
+                    
+</div><div class="movie-card tt1345836">
+
+                    <div class="img-card">
+                        <img src="https://imdb-api.com/images/original/MV5BMTk4ODQzNDY3Ml5BMl5BanBnXkFtZTcwODA0NTM4Nw@@._V1_Ratio0.7273_AL_.jpg" alt="imagen de la pelicula">
+                    </div>
+                    <div class="info-card">
+                        <span class="card-title">The Dark Knight Rises</span><br><small>(2012) aka "Batman: El caballero de la noche asciende"</small>
+                    </div>
+                    <div class="card-actions">
+                            <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="add-to-my-list" movieid="tt1345836" onclick="agregarAMiListaContent(this)"><i class="fa-solid fa-heart-circle-plus fa-sm"></i></a>
+                    </div>
+                    
+</div><div class="movie-card tt0372784">
+
+                    <div class="img-card">
+                        <img src="https://imdb-api.com/images/original/MV5BOTY4YjI2N2MtYmFlMC00ZjcyLTg3YjEtMDQyM2ZjYzQ5YWFkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_Ratio0.7273_AL_.jpg" alt="imagen de la pelicula">
+                    </div>
+                    <div class="info-card">
+                        <span class="card-title">Batman Begins</span><br><small>(2005)</small>
+                    </div>
+                    <div class="card-actions">
+                            <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="add-to-my-list" movieid="tt0372784" onclick="agregarAMiListaContent(this)"><i class="fa-solid fa-heart-circle-plus fa-sm"></i></a>
+                    </div>
+                    
+</div><div class="movie-card tt18689424">
+
+                    <div class="img-card">
+                        <img src="https://imdb-api.com/images/original/MV5BYzgyMTMzZjUtNGNjMy00NTJjLWIzNDYtMTc2YzQwOGE5MGM4XkEyXkFqcGdeQXVyMTUwODYzMjcw._V1_Ratio0.7273_AL_.jpg" alt="imagen de la pelicula">
+                    </div>
+                    <div class="info-card">
+                        <span class="card-title">Batman v Superman: Dawn of Justice Ultimate Edition</span><br><small>(2016)</small>
+                    </div>
+                    <div class="card-actions">
+                            <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="add-to-my-list" movieid="tt18689424" onclick="agregarAMiListaContent(this)"><i class="fa-solid fa-heart-circle-plus fa-sm"></i></a>
+                    </div>
+                    
+</div><div class="movie-card tt0060153">
+
+                    <div class="img-card">
+                        <img src="https://imdb-api.com/images/original/MV5BODVjNjdlYTQtMWIwYy00MWIyLWI2ZmMtZWFhMTdjNjAzNGVlXkEyXkFqcGdeQXVyNTAyNDQ2NjI@._V1_Ratio0.7273_AL_.jpg" alt="imagen de la pelicula">
+                    </div>
+                    <div class="info-card">
+                        <span class="card-title">Batman</span><br><small>(1966)</small>
+                    </div>
+                    <div class="card-actions">
+                            <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="add-to-my-list" movieid="tt0060153" onclick="agregarAMiListaContent(this)"><i class="fa-solid fa-heart-circle-plus fa-sm"></i></a>
+                    </div>
+                    
+</div><div class="movie-card tt0118688">
+
+                    <div class="img-card">
+                        <img src="https://imdb-api.com/images/original/MV5BMGQ5YTM1NmMtYmIxYy00N2VmLWJhZTYtN2EwYTY3MWFhOTczXkEyXkFqcGdeQXVyNTA2NTI0MTY@._V1_Ratio0.7273_AL_.jpg" alt="imagen de la pelicula">
+                    </div>
+                    <div class="info-card">
+                        <span class="card-title">Batman &amp; Robin</span><br><small>(1997)</small>
+                    </div>
+                    <div class="card-actions">
+                            <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="add-to-my-list" movieid="tt0118688" onclick="agregarAMiListaContent(this)"><i class="fa-solid fa-heart-circle-plus fa-sm"></i></a>
+                    </div>
+                    
+</div></article>
             
         </section>
         
         <aside>
             
-        </aside>
+        <div class="mi-lista" style="transform: translateX(99.5%);"><div class="botonera">
+        <button class="mi-lista-button"><i class="fa-solid fa-heart"></i></button>
+        <button class="bajar-lista" style="transform: translate(-100%, 0%);"><i class="fa-solid fa-floppy-disk"></i></button>
+        <button class="subir-lista" style="transform: translate(-100%, 0%);"><i class="fa-solid fa-cloud-arrow-up"></i></button>
+        </div><div class="mi-lista-content"><div class="favorite-movie-card" favorite-id="tt0372784">
+
+                    <div class="img-card">
+                        <img src="https://imdb-api.com/images/original/MV5BOTY4YjI2N2MtYmFlMC00ZjcyLTg3YjEtMDQyM2ZjYzQ5YWFkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_Ratio0.7273_AL_.jpg" alt="imagen de la pelicula">
+                    </div>
+                    <div class="info-card">
+                        <span class="card-title">Batman Begins</span><br><small>(2005)</small>
+                    </div>
+                    <div class="card-actions">
+                            <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            
+                    
+                        <a class="remove-from-my-list" movieid="tt0372784" onclick="removeMeFromFavList(this)"><i class="fa-solid fa-heart-circle-minus fa-sm"></i></a></div>
+                    
+</div><div class="favorite-movie-card" favorite-id="tt1345836">
+
+                    <div class="img-card">
+                        <img src="https://imdb-api.com/images/original/MV5BMTk4ODQzNDY3Ml5BMl5BanBnXkFtZTcwODA0NTM4Nw@@._V1_Ratio0.7273_AL_.jpg" alt="imagen de la pelicula">
+                    </div>
+                    <div class="info-card">
+                        <span class="card-title">The Dark Knight Rises</span><br><small>(2012) aka "Batman: El caballero de la noche asciende"</small>
+                    </div>
+                    <div class="card-actions">
+                            <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            
+                    
+                        <a class="remove-from-my-list" movieid="tt1345836" onclick="removeMeFromFavList(this)"><i class="fa-solid fa-heart-circle-minus fa-sm"></i></a></div>
+                    
+</div></div></div></aside>
     </main>
     <footer>
 
@@ -50,3 +205,24 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+
+
+<!-- 
+<main>
+    <section>
+        <article class="movies">
+            <div class="form-container">
+                <form action="" id="first-search-form" style="text-align: center;">
+                    <h1>Movie a Movie : <br><br> Tu biblioteca de cine</h1>
+                    <input type="text" placeholder="Buscar" id="first-search-input"  class="first-search-input">
+                </form>
+            </div>
+        </article>
+        
+    </section>
+    
+    <aside>
+        
+    </aside>
+</main> -->
