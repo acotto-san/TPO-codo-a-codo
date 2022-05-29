@@ -316,7 +316,7 @@ aside::-webkit-scrollbar {
     background-color: var(--color-cuatro);
     overflow: scroll;
     border-left: solid 2px var(--color-tres);
-    /* box-shadow: -4px 0px 6px white; */
+    padding: 0 0 calc(var(--footer-height) + var(--header-height)) 0;
     z-index: 998;
     width: 100%;
 }
