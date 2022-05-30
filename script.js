@@ -1,9 +1,31 @@
-let apikey = 'k_t8q4da69'
+let apikey = 'k_bzkveqwr'
 let apikeys = ['k_bzkveqwr', 'k_t8q4da69']
 
 let aside;
 let miLista;
 let nav;
+
+let thisPage;
+let slideIndex = 1;
+let movieObject={};
+
+// Next/previous controls
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
+
+
+function showSlides(n) {
+    let i;
+    let slides = document.getElementsByClassName("mySlides");
+    if (n > slides.length) { slideIndex = 1 }
+    if (n < 1) { slideIndex = slides.length }
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    slides[slideIndex - 1].style.display = "block";
+}
+
 
 function agregarAMiListaContent(btn) {
     if (!miLista.content.consultarSiIniciado()) {
@@ -13,9 +35,9 @@ function agregarAMiListaContent(btn) {
     miLista.guardarEnStorage();
 }
 
-function masInfo(btn){
+function loadMasInfo(btn) {
     const movieId = btn.getAttribute('movieid')
-    localStorage.setItem('moreInfoId',movieId)
+    localStorage.setItem('moreInfoId', movieId)
     location.assign(location.origin + '/more-info.html')
 }
 
@@ -24,6 +46,20 @@ function removeMeFromFavList(element) {
     miLista.guardarEnStorage()
     if (document.querySelector('.mi-lista-content').childElementCount == 0) {
         miLista.content.marcarComoNoIniciado()
+    }
+}
+
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+class Loader {
+    constructor() {
+        const item = document.createElement('div')
+        item.classList.add('lds-roller')
+        item.innerHTML = `<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>`
+        return item
     }
 }
 
@@ -56,7 +92,8 @@ class MiLista {
         <button class="bajar-lista"><i class="fa-solid fa-floppy-disk"></i></button>
         <button class="subir-lista"><i class="fa-solid fa-cloud-arrow-up"></i></button>
         </div>`
-        aside.appendChild(this.obj)
+        const asideElement = document.querySelector('aside')
+        asideElement.appendChild(this.obj)
         this.aLaVista = false;
         this.subirListaBoton = new SubirListaBoton()
         this.bajarListaBoton = new BajarListaBoton()
@@ -102,7 +139,7 @@ class MiLista {
 class MiListaContent {
     constructor(element = null) {
 
-        
+
         if (this.consultarSiIniciado()) {
             this.obj = document.createElement('div')
             this.obj.className = 'mi-lista-content'
@@ -117,8 +154,8 @@ class MiListaContent {
 
     }
 
-    consultarSiIniciado(){
-        return localStorage.getItem('miListaInitStatus')=="true"
+    consultarSiIniciado() {
+        return localStorage.getItem('miListaInitStatus') == "true"
     }
 
     setObj(element) {
@@ -136,14 +173,14 @@ class MiListaContent {
     marcarComoNoIniciado() {
         this.obj.classList.add('mi-lista-not-init')
         this.obj.innerHTML = `<div><img src="./assets/lista-guia.png"></div>`
-        localStorage.setItem('miListaInitStatus','false')
+        localStorage.setItem('miListaInitStatus', 'false')
 
     }
 
     iniciarPorPrimeraVez() {
         this.obj.classList.remove('mi-lista-not-init')
         this.obj.innerHTML = ""
-        localStorage.setItem('miListaInitStatus','true')
+        localStorage.setItem('miListaInitStatus', 'true')
     }
 
 }
@@ -218,22 +255,22 @@ class NavBar {
     // }
 
 
-agregarEventosEnNavForm(){
+    agregarEventosEnNavForm() {
 
         const navForm = document.getElementById('nav-search-form')
         navForm.addEventListener('submit', function (event) {
             event.preventDefault();
 
-        
+
             const searchInput = navForm.elements['nav-search-input'].value
             if (searchInput.trim() === "") {
                 console.log("Error con el input de la busqueda")
             } else {
-                if(location.pathname!=="/"){
+                if (location.pathname !== "/") {
                     location.assign(location.origin)
-                    localStorage.setItem('searchRedirection','true')
-                    localStorage.setItem('searchRedirectionPayload',searchInput)
-                }else{
+                    localStorage.setItem('searchRedirection', 'true')
+                    localStorage.setItem('searchRedirectionPayload', searchInput)
+                } else {
                     searchMovies(searchInput);
                 }
             }
@@ -247,7 +284,7 @@ agregarEventosEnNavForm(){
 let firstSearchForm;
 let moviesDiv
 
-function onloadIndex(){
+function onloadIndex() {
     inicializarPrimerSearch();
     aside = document.querySelector('aside')
     miLista = new MiLista()
@@ -255,13 +292,13 @@ function onloadIndex(){
 
 }
 
-function  inicializarPrimerSearch(){
+function inicializarPrimerSearch() {
     firstSearchForm = document.getElementById('first-search-form');
 
-    if(firstSearchForm){
+    if (firstSearchForm) {
         firstSearchForm.addEventListener('submit', function (event) {
             event.preventDefault();
-        
+
             const searchInput = firstSearchForm.elements['first-search-input'].value
             if (searchInput.trim() === "") {
                 console.log("Error con el input de la busqueda")
@@ -269,7 +306,7 @@ function  inicializarPrimerSearch(){
                 searchMovies(searchInput);
                 firstSearchForm.parentNode.remove()
             }
-            })
+        })
     }
 
 }
@@ -282,8 +319,8 @@ function searchMovies(input) {
     fetch(`https://imdb-api.com/es/API/search/${apikey}/${input}`)
         .then(response => response.json())
         .then(data => data.results.forEach(element => crearNuevaTarjeta(element)))
-        .then(()=> animacion.remove())
-        .then(()=>{inicializarBotonesDeMasInfo()});
+        .then(() => animacion.remove())
+        .then(() => { inicializarBotonesDeMasInfo() });
     // pelis.results.forEach(element => crearNuevaTarjeta(element))
 }
 
@@ -301,7 +338,7 @@ function crearNuevaTarjeta(obj) {
                         <span class="card-title">${obj.title}</span><small>${obj.description}</small>
                     </div>
                     <div class="card-actions">
-                            <a class="mas-info-card" movieid="${obj.id}" onclick=masInfo(this)><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="mas-info-card" movieid="${obj.id}" onclick=loadMasInfo(this)><i class="fa-solid fa-circle-info fa-sm"></i></a>
                             <a class="add-to-my-list" movieid="${obj.id}" onclick=agregarAMiListaContent(this)><i class="fa-solid fa-heart-circle-plus fa-sm"></i></a>
                     </div>
                     
@@ -329,10 +366,10 @@ function clonarTarjetaPadreDelBotton(btn) {
     return tarjetaNueva
 }
 
-function chequearSiEsRedireccion(){
-    if(localStorage.getItem('searchRedirection')=='true'){
+function chequearSiEsRedireccion() {
+    if (localStorage.getItem('searchRedirection') == 'true') {
         searchMovies(localStorage.getItem('searchRedirectionPayload'))
-        localStorage.setItem('searchRedirection','false')
+        localStorage.setItem('searchRedirection', 'false')
     }
 }
 
@@ -341,21 +378,117 @@ function chequearSiEsRedireccion(){
 
 
 
-function onloadMoreInfo(){
+function onloadMoreInfo() {
+    thisPage = new LoadMasInfoPage()
     buscarMoreInfoDataEnLocalStorage();
-    aside = document.querySelector('aside')
-    miLista = new MiLista()
+    // miLista = new MiLista()
+    
 }
 
 
-function buscarMoreInfoDataEnLocalStorage(){
-    if(localStorage.getItem('moreInfoId')){
+function buscarMoreInfoDataEnLocalStorage() {
+    if (localStorage.getItem('moreInfoId')) {
         return localStorage.getItem('moreInfoId')
-    }else{
+    } else {
         location.assign(location.origin)
     }
 }
 
+function conseguirDataDePelicula(id) {
+
+    // https://imdb-api.com/es/API/ExternalSites/k_bzkveqwr/tt1375666
+    // https://imdb-api.com/es/API/Title/k_bzkveqwr/tt1375666/Images
+    // https://imdb-api.com/en/API/YouTubeTrailer/k_bzkveqwr/tt1375666
+
+}
+
+
+
+
+class LoadMasInfoPage{
+    constructor(){
+        
+        this.searchMovieData(localStorage.getItem('moreInfoId'))
+        
+        this.agregarImagenes();
+    }
+
+
+    crearItem(){
+        const item = document.createElement('section')
+        item.id = 'section-more-info'
+        item.innerHTML = `
+        <article class="more-info-container">
+
+            <div class="visual">
+                <div class="poster"><img src="${movieObject.image}" alt=""></div>
+                <div class="imagenes">
+                    <div class="imagen-previous" onclick="plusSlides(-1)"><i class="fa-solid fa-chevron-left fa-2xl"></i>
+                    </div>
+                    <div class="imagen-content">
+                        <iframe class="mySlides" src="https://www.youtube.com/embed/${movieObject.ytTrailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ></iframe>
+                    </div>
+                    <a class="imagen-next" onclick="plusSlides(1)"><i class="fa-solid fa-chevron-right fa-2xl"></i></a>
+                </div>
+            </div>
+            <div class="sinopsis">
+                <h2>${movieObject.title}</h2>
+                <p>${movieObject.sinopsis}</p>
+            </div>
+            <div class="data">
+                <button><a href="${movieObject.officialWebsite}">Sitio oficial</a></button>
+                <button><a href="">Agregar a Mi Lista</a></button>
+                
+            </div>
+            
+
+        </article>
+`
+        const main = document.querySelector('main')
+        main.appendChild(item)
+        const body = document.getElementsByTagName('body')
+        const aside = document.createElement('aside')
+        main.appendChild(aside)
+    }
+    agregarImagenes(){
+        const container = document.querySelector('.imagen-content')
+        for (item in movieObject.imagenes){
+            const img = document.createElement('img')
+            img.src = item.image
+            container.appendChild(img)
+        } 
+
+    }
+
+    searchMovieData(movieId){
+
+        fetch(`https://imdb-api.com/es/API/Title/${apikey}/${movieId}/Images`)
+            .then(response => response.json())
+            .then(data => {
+                movieObject.id = data.id;
+                movieObject.title = data.title;
+                movieObject.image = data.image;
+                movieObject.sinopsis = data.plotLocal;
+                movieObject.imagenes = data.images.items;
+                movieObject.metacritic = data.metacriticRating;
+            })
+            .then(()=>{
+                fetch(`https://imdb-api.com/es/API/ExternalSites/${apikey}/${movieId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        movieObject.officialWebsite = data.officialWebsite;
+                    })
+                    .then(()=>{
+                        fetch(` https://imdb-api.com/en/API/YouTubeTrailer/${apikey}/${movieId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                movieObject.ytTrailer = data.videoId
+                            })
+                            .then(()=>this.crearItem())
+                    })
+            })
+    }
+}
 
 
 
@@ -364,25 +497,10 @@ function buscarMoreInfoDataEnLocalStorage(){
 
 
 
-
-
-
-function inicializarBotonesDeMasInfo(){
+function inicializarBotonesDeMasInfo() {
     console.log("listo")
 }
-function removeAllChildNodes(parent) {
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
-}
-class Loader{
-    constructor(){
-        const item = document.createElement('div')
-        item.classList.add('lds-roller') 
-        item.innerHTML = `<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>`
-        return item
-    }
-}
+
 
 
 
@@ -394,9 +512,9 @@ class Loader{
 
 
 nav = new NavBar()
-function onload(){
-    
-    switch(location.pathname){
+function onload() {
+
+    switch (location.pathname) {
         case '/':
             onloadIndex();
             break;
@@ -408,3 +526,9 @@ function onload(){
             break;
     }
 }
+// function mainLoad(){
+//     if(location.pathname == '/more-info.html'){
+//         onloadMoreInfo()
+//     }
+// }
+// mainLoad()
