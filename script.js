@@ -13,6 +13,12 @@ function agregarAMiListaContent(btn) {
     miLista.guardarEnStorage();
 }
 
+function masInfo(btn){
+    const movieId = btn.getAttribute('movieid')
+    localStorage.setItem('moreInfoId',movieId)
+    location.assign(location.origin + '/more-info.html')
+}
+
 function removeMeFromFavList(element) {
     document.querySelector(`[favorite-id="${element.getAttribute('movieId')}"]`).remove()
     miLista.guardarEnStorage()
@@ -295,7 +301,7 @@ function crearNuevaTarjeta(obj) {
                         <span class="card-title">${obj.title}</span><small>${obj.description}</small>
                     </div>
                     <div class="card-actions">
-                            <a class="mas-info-card"><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="mas-info-card" movieid="${obj.id}" onclick=masInfo(this)><i class="fa-solid fa-circle-info fa-sm"></i></a>
                             <a class="add-to-my-list" movieid="${obj.id}" onclick=agregarAMiListaContent(this)><i class="fa-solid fa-heart-circle-plus fa-sm"></i></a>
                     </div>
                     
@@ -331,11 +337,24 @@ function chequearSiEsRedireccion(){
 }
 
 
-// --------------------------------------------
+// -----------------elmentos de more info---------------------------
 
 
 
+function onloadMoreInfo(){
+    buscarMoreInfoDataEnLocalStorage();
+    aside = document.querySelector('aside')
+    miLista = new MiLista()
+}
 
+
+function buscarMoreInfoDataEnLocalStorage(){
+    if(localStorage.getItem('moreInfoId')){
+        return localStorage.getItem('moreInfoId')
+    }else{
+        location.assign(location.origin)
+    }
+}
 
 
 
@@ -383,6 +402,9 @@ function onload(){
             break;
         case '/contacto.html':
             onloadContacto();
+            break;
+        case '/more-info.html':
+            onloadMoreInfo();
             break;
     }
 }
