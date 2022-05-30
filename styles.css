@@ -192,7 +192,8 @@ aside{
 #section-index::-webkit-scrollbar,
 .movies::-webkit-scrollbar,
 .mi-lista-content::-webkit-scrollbar,
-aside::-webkit-scrollbar {
+aside::-webkit-scrollbar,
+.sinopsis::-webkit-scrollbar {
     display: none;
 }
 
@@ -208,7 +209,6 @@ aside::-webkit-scrollbar {
 }
 
 
-}
 .favorite-movie-card{
     margin: 4rem auto;
 }
@@ -569,7 +569,17 @@ aside::-webkit-scrollbar {
     padding: 1rem;
 }
 
+    .sinopsis{
+        padding: 3rem;
+    }
 
+    .data{
+        padding: 1rem;
+    }
+
+    .data *{
+        margin: 1.5rem;
+    }
 
 
     
@@ -611,10 +621,32 @@ aside::-webkit-scrollbar {
 
 .sinopsis{
     grid-area: sinopsis;
+
+    font-size: 3rem;
+
+    overflow: scroll;
 }
 
 .data{
     grid-area: data;
+
+    display: flex;
+    flex-direction: column;
+    
+
+
+    font-size: 4rem;
+    
+}
+
+.data>button{
+
+    height: 4rem ;
+    background-color: var(--header-color);
+
+    border-radius: 0.5rem;
+
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
 
 .poster{
@@ -668,6 +700,13 @@ aside::-webkit-scrollbar {
     justify-content: center;
     align-items: center;
 }
+
+
+.mySlides {
+    /* display: none; */
+  }
+
+
 /* -------------Loader------------------- */
 
 .lds-roller {
