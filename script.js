@@ -92,8 +92,8 @@ class MiLista {
         <button class="bajar-lista"><i class="fa-solid fa-floppy-disk"></i></button>
         <button class="subir-lista"><i class="fa-solid fa-cloud-arrow-up"></i></button>
         </div>`
-        const asideElement = document.querySelector('aside')
-        asideElement.appendChild(this.obj)
+        this.crearParent()
+
         this.aLaVista = false;
         this.subirListaBoton = new SubirListaBoton()
         this.bajarListaBoton = new BajarListaBoton()
@@ -117,6 +117,13 @@ class MiLista {
         this.bajarListaBoton.ocultar();
         this.subirListaBoton.ocultar();
         this.aLaVista = !this.aLaVista;
+    }
+
+    crearParent(){
+        const main = document.querySelector('main')
+        const aside = document.createElement('aside')
+        main.appendChild(aside)
+        aside.appendChild(this.obj)
     }
 
     getContent() {
@@ -381,7 +388,7 @@ function chequearSiEsRedireccion() {
 function onloadMoreInfo() {
     thisPage = new LoadMasInfoPage()
     buscarMoreInfoDataEnLocalStorage();
-    // miLista = new MiLista()
+    miLista = new MiLista()
     
 }
 
@@ -410,7 +417,9 @@ class LoadMasInfoPage{
         
         this.searchMovieData(localStorage.getItem('moreInfoId'))
         
-        this.agregarImagenes();
+        // this.agregarImagenes();
+        this.slideIndex = 1;
+
     }
 
 
@@ -426,7 +435,7 @@ class LoadMasInfoPage{
                     <div class="imagen-previous" onclick="plusSlides(-1)"><i class="fa-solid fa-chevron-left fa-2xl"></i>
                     </div>
                     <div class="imagen-content">
-                        <iframe class="mySlides" src="https://www.youtube.com/embed/${movieObject.ytTrailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ></iframe>
+                        <iframe class="mySlides" src="https://www.youtube.com/embed/${movieObject.ytTrailer}" title="YouTube video player" style='display:none;'frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ></iframe>
                     </div>
                     <a class="imagen-next" onclick="plusSlides(1)"><i class="fa-solid fa-chevron-right fa-2xl"></i></a>
                 </div>
@@ -452,11 +461,14 @@ class LoadMasInfoPage{
     }
     agregarImagenes(){
         const container = document.querySelector('.imagen-content')
-        for (item in movieObject.imagenes){
+        for (let i=0 ; i< movieObject.imagenes.length; i++){
             const img = document.createElement('img')
-            img.src = item.image
+            img.src = movieObject.imagenes[i].image
+            img.classList.add('mySlides')
             container.appendChild(img)
         } 
+        this.showSlides(this.slideIndex)
+
 
     }
 
@@ -485,8 +497,20 @@ class LoadMasInfoPage{
                                 movieObject.ytTrailer = data.videoId
                             })
                             .then(()=>this.crearItem())
+                            .then(()=>this.agregarImagenes())
                     })
             })
+    }
+
+    showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[slideIndex - 1].style.display = "block";
     }
 }
 
