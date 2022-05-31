@@ -27,10 +27,12 @@ function showSlides(n) {
 }
 
 class MovieObj{
-    constructor(fromElement,element){
-        if(fromElement=='movie-card'){
+    constructor(element){
+        if(element.parentNode.parentNode.getAttribute('class')=='movie-card'){
             
-            this.item = this.generateFromMovieCard(element)
+            this.generateFromMovieCard(element)
+        }else if (element.getAttribute('class')=='more-info-btn'){
+            this.generateFromMoreInfo(element)
         }
     }
 
@@ -41,6 +43,18 @@ class MovieObj{
         this.title = div.querySelector('.card-title').innerText
         this.description = div.querySelector('.card-description').innerText
     }
+
+    generateFromMoreInfo(element=movieObject){
+        this.id = movieObject.id
+        this.image = movieObject.image
+        this.description = '('
+        this.title = movieObject.title
+        const temp = movieObject.title.split('(')
+        this.title = temp[0]
+        this.description += temp[1]
+        // [this.title,this.tempdescription] = movieObject.title.split("(")
+        // this.description = this.description.concat(this.tempdescription)
+    }
 }
 
 
@@ -48,7 +62,7 @@ function agregarAMiListaContent(btn) {
     if (!miLista.content.consultarSiIniciado()) {
         miLista.content.iniciarPorPrimeraVez()
     }
-    const tarjetaFav = new TarjetaFavorita(new MovieObj('movie-card',btn));
+    const tarjetaFav = new TarjetaFavorita(new MovieObj(btn));
     miLista.guardarEnStorage();
 }
 
@@ -317,7 +331,6 @@ let moviesDiv
 
 function onloadIndex() {
     inicializarPrimerSearch();
-    aside = document.querySelector('aside')
     miLista = new MiLista()
     chequearSiEsRedireccion();
 
@@ -458,7 +471,7 @@ function chequearSiEsRedireccion() {
 function onloadMoreInfo() {
     thisPage = new LoadMasInfoPage()
     buscarMoreInfoDataEnLocalStorage();
-    miLista = new MiLista()
+
 
 }
 
@@ -500,7 +513,7 @@ class LoadMasInfoPage {
         <article class="more-info-container">
 
             <div class="visual">
-                <div class="poster"><img src="${movieObject.image}" alt=""></div>
+                <div class="poster"><img class="movie-poster" src="${movieObject.image}" alt=""></div>
                 <div class="imagenes">
                     <div class="imagen-previous" onclick="plusSlides(-1)"><i class="fa-solid fa-chevron-left fa-2xl"></i>
                     </div>
@@ -511,12 +524,12 @@ class LoadMasInfoPage {
                 </div>
             </div>
             <div class="sinopsis">
-                <h2>${movieObject.title}</h2>
+                <h2 class="movie-title">${movieObject.title}</h2>
                 <p>${movieObject.sinopsis}</p>
             </div>
             <div class="data">
                 <button><a href="${movieObject.officialWebsite}">Sitio oficial</a></button>
-                <button><a href="">Agregar a Mi Lista</a></button>
+                <button movieid="${movieObject.id}" class="more-info-btn" onclick=agregarAMiListaContent(this)>Agregar a Mi Lista</button>
                 
             </div>
             
@@ -526,8 +539,9 @@ class LoadMasInfoPage {
         const main = document.querySelector('main')
         main.appendChild(item)
         const body = document.getElementsByTagName('body')
-        const aside = document.createElement('aside')
-        main.appendChild(aside)
+        miLista = new MiLista()
+        // const aside = document.createElement('aside')
+        // main.appendChild(aside)
     }
     agregarImagenes() {
         const container = document.querySelector('.imagen-content')
@@ -549,7 +563,7 @@ class LoadMasInfoPage {
             .then(response => response.json())
             .then(data => {
                 movieObject.id = data.id;
-                movieObject.title = data.title;
+                movieObject.title = data.fullTitle;
                 movieObject.image = data.image;
                 movieObject.sinopsis = data.plotLocal;
                 movieObject.imagenes = data.images.items;
@@ -608,23 +622,32 @@ function inicializarBotonesDeMasInfo() {
 
 
 nav = new NavBar()
-function onload() {
+// function onload() {
 
-    switch (location.pathname) {
-        case '/':
-            onloadIndex();
-            break;
-        case '/contacto.html':
-            onloadContacto();
-            break;
-        case '/more-info.html':
-            onloadMoreInfo();
-            break;
-    }
-}
-// function mainLoad(){
-//     if(location.pathname == '/more-info.html'){
-//         onloadMoreInfo()
+//     switch (location.pathname) {
+//         case '/':
+//             onloadIndex();
+//             break;
+//         case '/contacto.html':
+//             onloadContacto();
+//             break;
+//         case '/more-info.html':
+//             onloadMoreInfo();
+//             break;
 //     }
 // }
-// mainLoad()
+
+function mainLoad(){
+    switch (location.pathname) {
+                case '/':
+                    onloadIndex();
+                    break;
+                case '/contacto.html':
+                    onloadContacto();
+                    break;
+                case '/more-info.html':
+                    onloadMoreInfo();
+                    break;
+            }
+}
+mainLoad()
