@@ -7,7 +7,7 @@ let nav;
 
 let thisPage;
 let slideIndex = 1;
-let movieObject={};
+let movieObject = {};
 
 // Next/previous controls
 function plusSlides(n) {
@@ -26,12 +26,29 @@ function showSlides(n) {
     slides[slideIndex - 1].style.display = "block";
 }
 
+class MovieObj{
+    constructor(fromElement,element){
+        if(fromElement=='movie-card'){
+            
+            this.item = this.generateFromMovieCard(element)
+        }
+    }
+
+    generateFromMovieCard(element){
+        const div = element.parentNode.parentNode
+        this.id = div.getAttribute('card-id')
+        this.image = div.querySelector('img').getAttribute('src')
+        this.title = div.querySelector('.card-title').innerText
+        this.description = div.querySelector('.card-description').innerText
+    }
+}
+
 
 function agregarAMiListaContent(btn) {
     if (!miLista.content.consultarSiIniciado()) {
         miLista.content.iniciarPorPrimeraVez()
     }
-    miLista.content.setChild(clonarTarjetaPadreDelBotton(btn));
+    const tarjetaFav = new TarjetaFavorita(new MovieObj('movie-card',btn));
     miLista.guardarEnStorage();
 }
 
@@ -119,7 +136,7 @@ class MiLista {
         this.aLaVista = !this.aLaVista;
     }
 
-    crearParent(){
+    crearParent() {
         const main = document.querySelector('main')
         const aside = document.createElement('aside')
         main.appendChild(aside)
@@ -181,13 +198,20 @@ class MiListaContent {
         this.obj.classList.add('mi-lista-not-init')
         this.obj.innerHTML = `<div><img src="./assets/lista-guia.png"></div>`
         localStorage.setItem('miListaInitStatus', 'false')
-
     }
 
     iniciarPorPrimeraVez() {
         this.obj.classList.remove('mi-lista-not-init')
         this.obj.innerHTML = ""
         localStorage.setItem('miListaInitStatus', 'true')
+    }
+
+    eliminarDeLaLista(element){
+        document.querySelector(`[favorite-card-id="${element.getAttribute('movieId')}"]`).remove()
+        miLista.guardarEnStorage()
+        if (document.querySelector('.mi-lista-content').childElementCount == 0) {
+            this.marcarComoNoIniciado()
+        }
     }
 
 }
@@ -325,10 +349,56 @@ function searchMovies(input) {
     moviesDiv.appendChild(animacion)
     fetch(`https://imdb-api.com/es/API/search/${apikey}/${input}`)
         .then(response => response.json())
-        .then(data => data.results.forEach(element => crearNuevaTarjeta(element)))
+        .then(data => data.results.forEach(element => new Tarjeta(element)))
         .then(() => animacion.remove())
         .then(() => { inicializarBotonesDeMasInfo() });
     // pelis.results.forEach(element => crearNuevaTarjeta(element))
+}
+
+class Tarjeta {
+    constructor(obj) {
+        const nuevaTarjeta = document.createElement('div')
+        nuevaTarjeta.classList.add(`movie-card`)
+        nuevaTarjeta.setAttribute('card-id', obj.id)
+        moviesDiv.appendChild(nuevaTarjeta)
+        nuevaTarjeta.innerHTML = `
+
+                    <div class="img-card">
+                        <img src="${obj.image}" alt="imagen de la pelicula">
+                    </div>
+                    <div class="info-card">
+                        <span class="card-title">${obj.title}</span><small class="card-description">${obj.description}</small>
+                    </div>
+                    <div class="card-actions">
+                            <a class="mas-info-card" movieid="${obj.id}" onclick=loadMasInfo(this)><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="add-to-my-list" movieid="${obj.id}" onclick=agregarAMiListaContent(this)><i class="fa-solid fa-heart-circle-plus fa-sm"></i></a>
+                    </div>
+                    
+`
+    }
+}
+
+class TarjetaFavorita {
+    constructor(obj) {
+        const nuevaTarjeta = document.createElement('div')
+        nuevaTarjeta.classList.add(`favorite-movie-card`)
+        nuevaTarjeta.setAttribute('favorite-card-id',obj.id)
+        miLista.content.setChild(nuevaTarjeta)
+        nuevaTarjeta.innerHTML = `
+
+                    <div class="img-card">
+                        <img src="${obj.image}" alt="imagen de la pelicula">
+                    </div>
+                    <div class="info-card">
+                        <span class="card-title">${obj.title}</span><small class="card-description">${obj.description}</small>
+                    </div>
+                    <div class="card-actions">
+                            <a class="mas-info-card" movieid="${obj.id}" onclick=loadMasInfo(this)><i class="fa-solid fa-circle-info fa-sm"></i></a>
+                            <a class="add-to-my-list" movieid="${obj.id}" onclick=miLista.content.eliminarDeLaLista(this)><i class="fa-solid fa-heart-circle-minus fa-sm"></i></a>
+                    </div>
+                    
+`
+    }
 }
 
 function crearNuevaTarjeta(obj) {
@@ -369,7 +439,7 @@ function clonarTarjetaPadreDelBotton(btn) {
 
     tarjetaNueva.querySelector('.add-to-my-list').remove()
     tarjetaNueva.querySelector('.card-actions').innerHTML += `
-                        <a class="remove-from-my-list" movieid="${movieId}" onclick=removeMeFromFavList(this)><i class="fa-solid fa-heart-circle-minus fa-sm"></i></a>`
+                        <a class="remove-from-my-list" movieid="${movieId}" onclick=miLista.content.eliminarDeLaLista(this)><i class="fa-solid fa-heart-circle-minus fa-sm"></i></a>`
     return tarjetaNueva
 }
 
@@ -389,7 +459,7 @@ function onloadMoreInfo() {
     thisPage = new LoadMasInfoPage()
     buscarMoreInfoDataEnLocalStorage();
     miLista = new MiLista()
-    
+
 }
 
 
@@ -412,18 +482,18 @@ function conseguirDataDePelicula(id) {
 
 
 
-class LoadMasInfoPage{
-    constructor(){
-        
+class LoadMasInfoPage {
+    constructor() {
+
         this.searchMovieData(localStorage.getItem('moreInfoId'))
-        
+
         // this.agregarImagenes();
         this.slideIndex = 1;
 
     }
 
 
-    crearItem(){
+    crearItem() {
         const item = document.createElement('section')
         item.id = 'section-more-info'
         item.innerHTML = `
@@ -459,21 +529,22 @@ class LoadMasInfoPage{
         const aside = document.createElement('aside')
         main.appendChild(aside)
     }
-    agregarImagenes(){
+    agregarImagenes() {
         const container = document.querySelector('.imagen-content')
-        for (let i=0 ; i< movieObject.imagenes.length; i++){
+        for (let i = 0; i < movieObject.imagenes.length; i++) {
             const img = document.createElement('img')
             img.src = movieObject.imagenes[i].image
             img.classList.add('mySlides')
             container.appendChild(img)
-        } 
+        }
         this.showSlides(this.slideIndex)
 
 
     }
 
-    searchMovieData(movieId){
-
+    searchMovieData(movieId) {
+        const animacion = new Loader()
+        document.querySelector('main').appendChild(animacion)
         fetch(`https://imdb-api.com/es/API/Title/${apikey}/${movieId}/Images`)
             .then(response => response.json())
             .then(data => {
@@ -484,20 +555,21 @@ class LoadMasInfoPage{
                 movieObject.imagenes = data.images.items;
                 movieObject.metacritic = data.metacriticRating;
             })
-            .then(()=>{
+            .then(() => {
                 fetch(`https://imdb-api.com/es/API/ExternalSites/${apikey}/${movieId}`)
                     .then(response => response.json())
                     .then(data => {
                         movieObject.officialWebsite = data.officialWebsite;
                     })
-                    .then(()=>{
+                    .then(() => {
                         fetch(` https://imdb-api.com/en/API/YouTubeTrailer/${apikey}/${movieId}`)
                             .then(response => response.json())
                             .then(data => {
                                 movieObject.ytTrailer = data.videoId
                             })
-                            .then(()=>this.crearItem())
-                            .then(()=>this.agregarImagenes())
+                            .then(() => this.crearItem())
+                            .then(() => this.agregarImagenes())
+                            .then(()=> animacion.remove())
                     })
             })
     }
