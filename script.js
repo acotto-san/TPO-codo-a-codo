@@ -469,10 +469,25 @@ function chequearSiEsRedireccion() {
 
 
 function onloadMoreInfo() {
-    thisPage = new LoadMasInfoPage()
+    thisPage = new LoadMasInfoPage(localStorage.getItem('moreInfoId'))
     buscarMoreInfoDataEnLocalStorage();
 
 
+}
+
+function onloadRandom(){
+
+    function randomIntFromInterval(min=1, max=250) { // min and max included 
+        return Math.floor(Math.random() * (max - min + 1) + min)
+    } 
+    
+    let random
+    fetch(`https://imdb-api.com/en/API/Top250Movies/${apikey}`)
+        .then(response => response.json())
+        .then(data => {
+            thisPage = new LoadMasInfoPage(data.items[randomIntFromInterval()].id)
+        } )
+    
 }
 
 
@@ -484,21 +499,14 @@ function buscarMoreInfoDataEnLocalStorage() {
     }
 }
 
-function conseguirDataDePelicula(id) {
-
-    // https://imdb-api.com/es/API/ExternalSites/k_bzkveqwr/tt1375666
-    // https://imdb-api.com/es/API/Title/k_bzkveqwr/tt1375666/Images
-    // https://imdb-api.com/en/API/YouTubeTrailer/k_bzkveqwr/tt1375666
-
-}
 
 
 
 
 class LoadMasInfoPage {
-    constructor() {
+    constructor(id) {
 
-        this.searchMovieData(localStorage.getItem('moreInfoId'))
+        this.searchMovieData(id)
 
         // this.agregarImagenes();
         this.slideIndex = 1;
@@ -647,6 +655,9 @@ function mainLoad(){
                     break;
                 case '/more-info.html':
                     onloadMoreInfo();
+                    break;
+                case '/random.html':
+                    onloadRandom();
                     break;
             }
 }
