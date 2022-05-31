@@ -47,6 +47,9 @@ h1{
     --card-notinit-height:  31rem;
 
     --nav-spani-fsize:      2rem;
+
+    --data-btn-fsize:       2rem;
+    --sinopsis-fsize:       3rem;
 }
 
 body{
@@ -571,6 +574,7 @@ aside::-webkit-scrollbar,
 
     .sinopsis{
         padding: 3rem;
+        font-size: var(--sinopsis-fsize);
     }
 
     .data{
@@ -582,7 +586,9 @@ aside::-webkit-scrollbar,
     }
 
 
-    
+    .data button>a,.data button{
+        font-size: var(--data-btn-fsize);
+    }
     
 }
 
@@ -622,8 +628,6 @@ aside::-webkit-scrollbar,
 .sinopsis{
     grid-area: sinopsis;
 
-    font-size: 3rem;
-
     overflow: scroll;
 }
 
@@ -632,19 +636,19 @@ aside::-webkit-scrollbar,
 
     display: flex;
     flex-direction: column;
-    
 
-
-    font-size: 4rem;
     
 }
 
-.data>button{
+.data button>a,.data button{
+
 
     height: 4rem ;
+
     background-color: var(--header-color);
 
     border-radius: 0.5rem;
+
 
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
@@ -703,7 +707,7 @@ aside::-webkit-scrollbar,
 
 
 .mySlides {
-    /* display: none; */
+    display: none;
   }
 
 
